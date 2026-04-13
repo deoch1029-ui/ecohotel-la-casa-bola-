@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecohotel La Casa Bola | Lujo Minimalista</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#F9F7F2",
+                        anthracite: "#2C2C2C",
+                        gold: "#B89B62",
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out forwards',
+                        'slide-up': 'slideUp 0.4s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        fadeInUp: { '0%': { transform: 'translateY(30px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #F9F7F2; color: #2C2C2C; -webkit-font-smoothing: antialiased; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const Icon = ({ path, className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{path}</svg>
+        );
+
+        const MapPin = (props) => <Icon {...props} path={<><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></>} />;
+        const Menu = (props) => <Icon {...props} path={<><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></>} />;
+        const X = (props) => <Icon {...props} path={<><path d="M18 6 6 18"/><path d="m6 6 18 18"/></>} />;
+        const MessageCircle = (props) => <Icon {...props} path={<><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></>} />;
+        const Instagram = (props) => <Icon {...props} path={<><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></>} />;
+        const Facebook = (props) => <Icon {...props} path={<><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></>} />;
+        const Phone = (props) => <Icon {...props} path={<><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></>} />;
+        const Mail = (props) => <Icon {...props} path={<><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></>} />;
+        const ChevronDown = (props) => <Icon {...props} path={<><path d="m6 9 6 6 6-6"/></>} />;
+        const TikTok = (props) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props?.className}>
+                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+            </svg>
+        );
+        const ChevronLeft = (props) => <Icon {...props} path={<><path d="m15 18-6-6 6-6"/></>} />;
+        const ChevronRight = (props) => <Icon {...props} path={<><path d="m9 18 6-6-6-6"/></>} />;
+        const Wifi = (props) => <Icon {...props} path={<><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/></>} />;
+        const Bath = (props) => <Icon {...props} path={<><path d="M9 6 6.5 3.5a2.121 2.121 0 0 1 3 3L9 9"/><path d="m11 6 2.5-2.5a2.121 2.121 0 1 1 3 3L14 9"/><path d="M17 11v6a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-6"/><path d="M12 11v9"/></>} />;
+        const BedDouble = (props) => <Icon {...props} path={<><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/></>} />;
+        const Mountain = (props) => <Icon {...props} path={<><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></>} />;
+        const Heart = (props) => <Icon {...props} path={<><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></>} />;
+        const ShowerHead = (props) => <Icon {...props} path={<><path d="M4 14h.01"/><path d="M4 10h.01"/><path d="M4 6h.01"/><path d="M12 2v6"/><path d="m8 18 4 4 4-4"/><path d="M18 14h.01"/><path d="M18 10h.01"/><path d="M18 6h.01"/><rect width="16" height="12" x="4" y="2" rx="2"/></>} />;
+        const Wine = (props) => <Icon {...props} path={<><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-3.5-2-5L12 2 9 5c-1.5 1.5-2 3-2 5a5 5 0 0 0 5 5Z"/></>} />;
+        const ShieldCheck = (props) => <Icon {...props} path={<><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></>} />;
+        const AlertTriangle = (props) => <Icon {...props} path={<><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></>} />;
+        const Users = (props) => <Icon {...props} path={<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>} />;
+        const Home = (props) => <Icon {...props} path={<><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></>} />;
+        const PackageX = (props) => <Icon {...props} path={<><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></>} />;
+        const Zap = (props) => <Icon {...props} path={<><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></>} />;
+        const Scale = (props) => <Icon {...props} path={<><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></>} />;
+        const Handshake = (props) => <Icon {...props} path={<><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/></>} />;
+
+        const hotelConfig = {
+            name: "Ecohotel La Casa Bola",
+            hero: {
+                title: "Tu refugio esférico en el valle de Guayllabamba",
+                subtitle: "Conexión pura con la naturaleza",
+                cta: "Reservar Ahora",
+                image: "https://i.ibb.co/MkVbdSWT/Whats-App-Image-2026-04-12-at-12-10-00-PM-1-upscayl-4x-upscayl-standard-4x.png"
+            },
+            location: {
+                address: "Sector Guayllabamba, vía Pueblo Viejo - A 35 minutos de Quito",
+                mapLink: "https://maps.app.goo.gl/PSNLLNd1xGcNhcNX7"
+            },
+            contact: {
+                whatsapp: "https://wa.me/593987908530",
+                email: "ecohotelcasabola@gmail.com",
+                socials: {
+                    facebook: "https://www.facebook.com/share/18ggNNEFp7/",
+                    instagram: "https://www.instagram.com/lacasabola/",
+                    tiktok: "https://www.tiktok.com/@lacasabola?is_from_webapp=1&sender_device=pc",
+                    handle: "@lacasabola"
+                }
+            },
+            footerNote: "Precios por pareja. Decoración romántica opcional por valor adicional.",
+            rooms: [
+                { id: 1, name: "Nido de Paz", price: 45, desc: "Ambiente natural y privado. Decoración romántica opcional.", image: "https://i.ibb.co/4RmtWqKm/Captura-de-pantalla-2026-04-12-132932-upscayl-4x-upscayl-standard-4x.png", images: ["https://i.ibb.co/4RmtWqKm/Captura-de-pantalla-2026-04-12-132932-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/jk2HWcKg/Captura-de-pantalla-2026-04-12-132923-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/4nxWHq31/Captura-de-pantalla-2026-04-12-132928-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/Mk8sp7Nc/Captura-de-pantalla-2026-04-12-132955-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/MkR8268F/Captura-de-pantalla-2026-04-12-133021-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/5D8D4fH/Captura-de-pantalla-2026-04-12-133025-upscayl-4x-upscayl-standard-4x.png"], longDescription: "Un espacio acogedor y tranquilo para parejas que buscan desconectarse y vivir la naturaleza. Cuenta con todo lo necesario para una estadía cómoda y privada. Su diseño circular maximiza la entrada de luz natural a través de grandes ventanales, creando un ambiente íntimo que respira con el valle. Los tonos cálidos de la madera y los textiles se combinan con la vegetación del entorno para ofrecer una experiencia de inmersión total.", priceNote: "$45 USD por pareja", services: [{ icon: <Wifi className="w-5 h-5"/>, text: "WiFi de Alta Velocidad" }, { icon: <BedDouble className="w-5 h-5"/>, text: "Cama Matrimonial" }, { icon: <Mountain className="w-5 h-5"/>, text: "Vista al Jardín" }, { icon: <ShowerHead className="w-5 h-5"/>, text: "Baño Privado con Ducha" }, { icon: <Heart className="w-5 h-5"/>, text: "Decoración Romántica Opcional" }], hasExtraNote: true, extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva." },
+                { id: 2, name: "Suite Real con Hidromasaje", price: 80, desc: "Hidromasaje Privado, Champán Incluido. Decoración romántica opcional.", image: "https://i.ibb.co/4gVczwvx/Captura-de-pantalla-2026-04-12-134050-upscayl-4x-upscayl-standard-4x.png", images: ["https://i.ibb.co/4gVczwvx/Captura-de-pantalla-2026-04-12-134050-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/1YYtbZfc/Captura-de-pantalla-2026-04-12-134040-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/G3tqN5mW/Captura-de-pantalla-2026-04-12-134043-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/VF2QXGV/Captura-de-pantalla-2026-04-12-134047-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/9kPd4g2W/Captura-de-pantalla-2026-04-12-134054-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/yFYZB9Pk/Captura-de-pantalla-2026-04-12-134057-upscayl-4x-upscayl-standard-4x.png"], longDescription: "La opción perfecta para quienes buscan desconectarse del ruido de la ciudad. Disfrute de un ambiente privado rodeado de naturaleza, con la tranquilidad total que solo La Casa Bola puede ofrecer. Esta suite combina la arquitectura esférica con un hidromasaje privado y una botella de champán de bienvenida para brindar por el atardecer en el valle. Los grandes ventanales de piso a techo enmarcan el paisaje montañoso, creando una experiencia de lujo inmersivo.", priceNote: "$80 USD por pareja", services: [{ icon: <Wifi className="w-5 h-5"/>, text: "WiFi Premium" }, { icon: <Bath className="w-5 h-5"/>, text: "Hidromasaje Privado" }, { icon: <Wine className="w-5 h-5"/>, text: "Botella de Champán Incluida" }, { icon: <BedDouble className="w-5 h-5"/>, text: "Cama Queen Size" }, { icon: <Mountain className="w-5 h-5"/>, text: "Vista Panorámica al Valle" }, { icon: <Heart className="w-5 h-5"/>, text: "Decoración Romántica Opcional" }], hasExtraNote: true, extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva." },
+                { id: 3, name: "Suite Real con Hidromasaje", price: 80, desc: "Hidromasaje Privado, Champán Incluido. Decoración romántica opcional.", image: "https://i.ibb.co/4nh76D48/Captura-de-pantalla-2026-04-12-134105-upscayl-4x-upscayl-standard-4x.png", images: ["https://i.ibb.co/4nh76D48/Captura-de-pantalla-2026-04-12-134105-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/chvW9KY4/Captura-de-pantalla-2026-04-12-134109-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/C3DqR6Kx/Captura-de-pantalla-2026-04-12-134112-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/97b5YC4/Captura-de-pantalla-2026-04-12-134115-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/LXSg9p20/Captura-de-pantalla-2026-04-12-134119-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/FqHKx06R/Captura-de-pantalla-2026-04-12-134123-upscayl-4x-upscayl-standard-4x.png"], longDescription: "La opción perfecta para quienes buscan desconectarse del ruido de la ciudad. Disfrute de un ambiente privado rodeado de naturaleza, con la tranquilidad total que solo La Casa Bola puede ofrecer. Esta suite ofrece una orientación distinta que garantiza privacidad y vistas únicas hacia la cordillera. Cuenta con hidromasaje privado climatizado disponible las 24 horas y una botella de champán de bienvenida para brindar por el atardecer en el valle.", priceNote: "$80 USD por pareja", services: [{ icon: <Wifi className="w-5 h-5"/>, text: "WiFi Premium" }, { icon: <Bath className="w-5 h-5"/>, text: "Hidromasaje Privado" }, { icon: <Wine className="w-5 h-5"/>, text: "Botella de Champán Incluida" }, { icon: <BedDouble className="w-5 h-5"/>, text: "Cama Queen Size" }, { icon: <Mountain className="w-5 h-5"/>, text: "Vista Panorámica" }, { icon: <Heart className="w-5 h-5"/>, text: "Decoración Romántica Opcional" }], hasExtraNote: true, extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva." },
+                { id: 4, name: "Esfera Estándar", price: 45, desc: "Ambiente natural y privado. Decoración romántica opcional.", image: "https://i.ibb.co/mgfq46J/Captura-de-pantalla-2026-04-12-134144-upscayl-4x-upscayl-standard-4x.png", images: ["https://i.ibb.co/mgfq46J/Captura-de-pantalla-2026-04-12-134144-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/Y6D9fJN/Captura-de-pantalla-2026-04-12-123508-upscayl-4x-ultrasharp-4x.png","https://i.ibb.co/QFy2f93r/Captura-de-pantalla-2026-04-12-123514-upscayl-4x-ultrasharp-4x.png","https://i.ibb.co/kgHVKvgS/Captura-de-pantalla-2026-04-12-123519-upscayl-4x-ultrasharp-4x.png","https://i.ibb.co/bgd7T4NP/Captura-de-pantalla-2026-04-12-123524-upscayl-4x-ultrasharp-4x.png","https://i.ibb.co/q34Z4Ytj/Captura-de-pantalla-2026-04-12-124033-upscayl-4x-ultrasharp-4x.png"], longDescription: "Un espacio acogedor y tranquilo para parejas que buscan desconectarse y vivir la naturaleza. Cuenta con todo lo necesario para una estadía cómoda y privada. Su diseño esférico, con amplios ventanales que enmarcan la vegetación circundante, crea una sensación de inmersión total en el entorno natural del valle de Guayllabamba. Los acabados en madera y los tonos neutros del interior reflejan la calma del paisaje exterior.", priceNote: "$45 USD por pareja", services: [{ icon: <Wifi className="w-5 h-5"/>, text: "WiFi Estándar" }, { icon: <BedDouble className="w-5 h-5"/>, text: "Cama Matrimonial" }, { icon: <ShowerHead className="w-5 h-5"/>, text: "Baño Privado" }, { icon: <Mountain className="w-5 h-5"/>, text: "Vista a la Naturaleza" }, { icon: <Heart className="w-5 h-5"/>, text: "Decoración Romántica Opcional" }], hasExtraNote: true, extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva." },
+                { id: 5, name: "Refugio Confort", price: 60, desc: "Ambiente natural y privado. Decoración romántica opcional.", image: "https://i.ibb.co/9mdNpyxN/Captura-de-pantalla-2026-04-12-125228-upscayl-4x-upscayl-standard-4x.png", images: ["https://i.ibb.co/9mdNpyxN/Captura-de-pantalla-2026-04-12-125228-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/d4cW2Sbp/Captura-de-pantalla-2026-04-12-125216-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/S48KtF0r/Captura-de-pantalla-2026-04-12-125220-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/KxD1ZQP4/Captura-de-pantalla-2026-04-12-125224-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/zHCJrgNL/Captura-de-pantalla-2026-04-12-125235-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/5WsXrbgV/Captura-de-pantalla-2026-04-12-134212-upscayl-4x-upscayl-standard-4x.png"], longDescription: "Un espacio acogedor y tranquilo para parejas que buscan desconectarse y vivir la naturaleza. Cuenta con todo lo necesario para una estadía cómoda y privada. Su diseño de techo inclinado con estructura de madera y acero negro le da un carácter de refugio rústico-moderno. Las grandes ventanas con cortinas blancas enmarcan el paisaje verde del valle, mientras los detalles florales y la vegetación interior refuerzan la conexión con el entorno natural.", priceNote: "$60 USD por pareja", services: [{ icon: <Wifi className="w-5 h-5"/>, text: "WiFi de Alta Velocidad" }, { icon: <BedDouble className="w-5 h-5"/>, text: "Cama King Size" }, { icon: <Mountain className="w-5 h-5"/>, text: "Ambiente Natural y Privado" }, { icon: <ShowerHead className="w-5 h-5"/>, text: "Baño Privado" }, { icon: <Heart className="w-5 h-5"/>, text: "Decoración Romántica Opcional" }], hasExtraNote: true, extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva." },
+                { id: 6, name: "Mirador del Valle con Jacuzzi", price: 80, desc: "Hidromasaje Privado, Champán Incluido. Decoración romántica opcional.", image: "https://i.ibb.co/CfvXhZM/Captura-de-pantalla-2026-04-12-125256-upscayl-4x-upscayl-standard-4x.png", images: ["https://i.ibb.co/CfvXhZM/Captura-de-pantalla-2026-04-12-125256-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/VcS0dB5W/Captura-de-pantalla-2026-04-12-125308-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/FtDrvYk/Captura-de-pantalla-2026-04-12-125316-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/sptBZ884/Captura-de-pantalla-2026-04-12-125323-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/GYHd5TV/Captura-de-pantalla-2026-04-12-131654-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/S7vWZxZK/Captura-de-pantalla-2026-04-12-184553-upscayl-4x-upscayl-standard-4x.png"], longDescription: "La opción perfecta para quienes buscan desconectarse del ruido de la ciudad. Disfrute de un ambiente privado rodeado de naturaleza, con la tranquilidad total que solo La Casa Bola puede ofrecer. Ubicada en el punto más alto del complejo, esta habitación combina el diseño de techo inclinado de madera con un jacuzzi privado equipado con múltiples chorros de masaje y una botella de champán de bienvenida. Los amplios ventanales con cortinas blancas enmarcan una vista panorámica de montañas y vegetación, creando una experiencia de lujo inmersivo donde la comodidad se funde con el paisaje.", priceNote: "$80 USD por pareja", services: [{ icon: <Wifi className="w-5 h-5"/>, text: "WiFi Premium" }, { icon: <Bath className="w-5 h-5"/>, text: "Hidromasaje Privado" }, { icon: <Wine className="w-5 h-5"/>, text: "Botella de Champán Incluida" }, { icon: <BedDouble className="w-5 h-5"/>, text: "Cama Queen Size" }, { icon: <Mountain className="w-5 h-5"/>, text: "Mejor Vista 360°" }, { icon: <Heart className="w-5 h-5"/>, text: "Decoración Romántica Opcional" }], hasExtraNote: true, extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva." },
+                { id: 7, name: "Atalaya de la Naturaleza", price: 60, desc: "La opción perfecta para quienes buscan desconectarse del ruido de la ciudad. Disfruta de un ambiente privado rodeado de naturaleza.", image: "https://i.ibb.co/TVdkQs9/Captura-de-pantalla-2026-04-12-125331-upscayl-4x-upscayl-standard-4x.png", images: ["https://i.ibb.co/TVdkQs9/Captura-de-pantalla-2026-04-12-125331-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/0yRJZqWY/Captura-de-pantalla-2026-04-12-125341-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/Mxc594Gj/Captura-de-pantalla-2026-04-12-125351-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/QFS8r7Pv/Captura-de-pantalla-2026-04-12-125407-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/tM6qJTXX/Captura-de-pantalla-2026-04-12-134236-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/p6VzRJzL/Captura-de-pantalla-2026-04-12-125337-upscayl-4x-upscayl-standard-4x.png"], longDescription: "La opción perfecta para quienes buscan desconectarse del ruido de la ciudad. Disfruta de un ambiente privado rodeado de naturaleza, con la tranquilidad total que solo La Casa Bola puede ofrecer. Esta habitación destaca por sus amplios ventanales con cortinas en tonos tierra que enmarcan vistas panorámicas del valle y las montañas circundantes. La decoración combina la calidez de la madera con textiles de estampados tropicales que evocan la naturaleza del entorno, creando un espacio íntimo y acogedor. Los detalles como las vigas negras en el techo y los muebles de madera natural refuerzan el carácter rústico-contemporáneo del espacio.", priceNote: "$60 USD por pareja", services: [{ icon: <Wifi className="w-5 h-5"/>, text: "WiFi de Alta Velocidad" }, { icon: <BedDouble className="w-5 h-5"/>, text: "Cama Matrimonial" }, { icon: <Mountain className="w-5 h-5"/>, text: "Vista Panorámica" }, { icon: <Heart className="w-5 h-5"/>, text: "Decoración Romántica Opcional" }, { icon: <ShowerHead className="w-5 h-5"/>, text: "Baño Privado" }], hasExtraNote: true, extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva." },
+                { id: 8, name: "Atalaya de la Naturaleza", price: 60, desc: "La opción perfecta para quienes buscan desconectarse del ruido de la ciudad. Disfruta de un ambiente privado rodeado de naturaleza.", image: "https://i.ibb.co/fz48KsqS/Captura-de-pantalla-2026-04-12-125416-upscayl-4x-upscayl-standard-4x.png", images: ["https://i.ibb.co/fz48KsqS/Captura-de-pantalla-2026-04-12-125416-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/wrBfbwQ5/Captura-de-pantalla-2026-04-12-125420-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/7J7tBpC7/Captura-de-pantalla-2026-04-12-125425-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/wnN1M35/Captura-de-pantalla-2026-04-12-125430-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/K36YWH1/Captura-de-pantalla-2026-04-12-125435-upscayl-4x-upscayl-standard-4x.png","https://i.ibb.co/VpSMM53g/Captura-de-pantalla-2026-04-12-181831-upscayl-4x-upscayl-standard-4x.png"], longDescription: "La opción perfecta para quienes buscan desconectarse del ruido de la ciudad. Disfruta de un ambiente privado rodeado de naturaleza, con la tranquilidad total que solo La Casa Bola puede ofrecer. Esta habitación se distingue por sus amplios ventanales curvos de piso a techo que enmarcan una vista espectacular de las montañas y la vegetación del valle. El interior combina paredes blancas con vigas negras en el techo, una cama con cabecera acolchada en tonos grises y textiles en marrones cálidos. Los muebles de madera natural y los acabados en mármol del baño privado completan una experiencia de confort contemporáneo en perfecta armonía con el entorno natural.", priceNote: "$60 USD por pareja", services: [{ icon: <Wifi className="w-5 h-5"/>, text: "WiFi de Alta Velocidad" }, { icon: <BedDouble className="w-5 h-5"/>, text: "Cama Matrimonial" }, { icon: <Mountain className="w-5 h-5"/>, text: "Vista Panorámica a las Montañas" }, { icon: <ShowerHead className="w-5 h-5"/>, text: "Baño Privado con Acabados en Mármol" }, { icon: <Heart className="w-5 h-5"/>, text: "Decoración Romántica Opcional" }], hasExtraNote: true, extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva." }
+            ]
+        };
+
+        const policies = [
+            { number: "01", title: "Objetos Personales", text: "El establecimiento no se responsabiliza por objetos personales olvidados, extraviados o dejados en habitaciones o áreas comunes. Los objetos encontrados serán resguardados por un período máximo de 15 días. Pasado este tiempo, el hotel podrá disponer de ellos.", icon: <PackageX className="w-5 h-5" /> },
+            { number: "02", title: "Daños o Pérdidas", text: "El hotel no se hace responsable por pérdidas, robos o daños a pertenencias personales dentro de las instalaciones. Se recomienda mantener sus objetos de valor bajo su custodia.", icon: <ShieldCheck className="w-5 h-5" /> },
+            { number: "03", title: "Uso de Instalaciones", text: "El uso de habitaciones, hidromasaje, áreas verdes, parqueadero y demás espacios es responsabilidad exclusiva del huésped. Los menores de edad deben estar bajo supervisión permanente de un adulto.", icon: <Home className="w-5 h-5" /> },
+            { number: "04", title: "Accidentes", text: "El establecimiento no se responsabiliza por accidentes ocasionados por el uso indebido de las instalaciones o por el incumplimiento de las normas internas.", icon: <AlertTriangle className="w-5 h-5" /> },
+            { number: "05", title: "Daños a la Propiedad", text: "Cualquier daño ocasionado a mobiliario, equipos, lencería o infraestructura del hotel deberá ser cubierto por el huésped responsable.", icon: <Scale className="w-5 h-5" /> },
+            { number: "06", title: "Ingreso de Visitantes", text: "El ingreso de personas adicionales debe ser previamente informado y autorizado por administración. El hotel no se responsabiliza por situaciones derivadas del ingreso de terceros no registrados.", icon: <Users className="w-5 h-5" /> },
+            { number: "07", title: "Fuerza Mayor", text: "El hotel no será responsable por interrupciones en los servicios ocasionadas por causas externas o de fuerza mayor, tales como cortes de energía, fallas en servicios públicos o eventos naturales.", icon: <Zap className="w-5 h-5" /> },
+            { number: "08", title: "Normas de Convivencia", text: "Se solicita respeto por el descanso de otros huéspedes y el cuidado de las instalaciones. El incumplimiento de estas normas podrá dar lugar a la finalización anticipada de la estadía sin derecho a reembolso.", icon: <Handshake className="w-5 h-5" /> }
+        ];
+
+        const Navbar = () => {
+            const [scrolled, setScrolled] = React.useState(false);
+            const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+            React.useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+            const navClasses = `fixed w-full z-40 transition-all duration-300 ease-in-out ${scrolled ? 'bg-[#F9F7F2]/90 backdrop-blur-md shadow-sm py-3 border-b border-gray-100' : 'bg-transparent py-6'}`;
+            const linkClasses = `text-sm uppercase tracking-widest transition-colors duration-300 ${scrolled ? 'text-anthracite/70 hover:text-gold' : 'text-white/90 hover:text-gold'}`;
+            const logoClasses = `font-serif text-2xl font-semibold transition-colors duration-300 ${scrolled ? 'text-anthracite hover:text-gold' : 'text-white drop-shadow-md hover:text-gold'}`;
+            const ctaClasses = `px-5 py-2 text-sm transition-all duration-300 ${scrolled ? 'border-anthracite text-anthracite hover:bg-anthracite hover:text-white' : 'border-white text-white hover:bg-white hover:text-anthracite'}`;
+            const menuBtnClasses = `transition-colors duration-300 ${scrolled ? 'text-anthracite' : 'text-white drop-shadow-md'}`;
+            return (
+                <nav className={navClasses}>
+                    <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+                        <a href="#" className={logoClasses}>La Casa Bola</a>
+                        <div className="hidden md:flex space-x-8 items-center">
+                            <a href="#habitaciones" className={linkClasses}>Habitaciones</a>
+                            <a href="#eventos" className={linkClasses}>Eventos</a>
+                            <a href="#ubicacion" className={linkClasses}>Ubicación</a>
+                            <a href="#politicas" className={linkClasses}>Políticas</a>
+                            <a href="#contacto" className={linkClasses}>Contacto</a>
+                            <a href={hotelConfig.contact.whatsapp} target="_blank" rel="noopener noreferrer" className={`border ${ctaClasses}`}>Reservar</a>
+                        </div>
+                        <button className={`md:hidden ${menuBtnClasses}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                            {mobileMenuOpen ? <X /> : <Menu />}
+                        </button>
+                    </div>
+                    {mobileMenuOpen && (
+                        <div className="absolute top-full left-0 w-full bg-[#F9F7F2] border-b border-gray-200 py-6 px-6 flex flex-col space-y-4 md:hidden shadow-xl text-anthracite">
+                            <a href="#habitaciones" onClick={() => setMobileMenuOpen(false)} className="text-lg font-serif">Habitaciones</a>
+                            <a href="#eventos" onClick={() => setMobileMenuOpen(false)} className="text-lg font-serif">Eventos</a>
+                            <a href="#ubicacion" onClick={() => setMobileMenuOpen(false)} className="text-lg font-serif">Ubicación</a>
+                            <a href="#politicas" onClick={() => setMobileMenuOpen(false)} className="text-lg font-serif">Políticas</a>
+                            <a href="#contacto" onClick={() => setMobileMenuOpen(false)} className="text-lg font-serif">Contacto</a>
+                            <a href={hotelConfig.contact.whatsapp} target="_blank" rel="noopener noreferrer" className="text-gold font-medium">Reservar por WhatsApp</a>
+                        </div>
+                    )}
+                </nav>
+            );
+        };
+
+        const Hero = () => (
+            <header className="relative h-screen flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 z-0">
+                    <img src={hotelConfig.hero.image} alt="La Casa Bola" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/40"></div>
+                </div>
+                <div className="relative z-10 text-center px-4 max-w-4xl mx-auto animate-fade-in-up">
+                    <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl text-white mb-6 leading-tight drop-shadow-lg">{hotelConfig.hero.title}</h1>
+                    <p className="text-white/90 text-lg md:text-xl mb-10 font-light tracking-wide drop-shadow-md">{hotelConfig.hero.subtitle}</p>
+                    <a href={hotelConfig.contact.whatsapp} target="_blank" rel="noopener noreferrer" className="inline-block bg-[#B89B62] text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#a0874f] transition-colors duration-300 shadow-lg hover:shadow-gold/20">{hotelConfig.hero.cta}</a>
+                </div>
+                <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce"><ChevronDown className="w-6 h-6 opacity-70" /></div>
+            </header>
+        );
+
+        const RoomCard = ({ room, onClick }) => (
+            <div onClick={onClick} className="group bg-white border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col h-full cursor-pointer">
+                <div className="relative overflow-hidden h-64">
+                    <img src={room.image} alt={room.name} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+                    <div className="absolute top-4 right-4 bg-[#F9F7F2]/90 backdrop-blur-sm px-3 py-1"><span className="text-gold font-serif font-semibold">${room.price}</span></div>
+                    {room.images && room.images.length > 1 && (
+                        <div className="absolute bottom-3 right-3 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center space-x-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                            <span>{room.images.length}</span>
+                        </div>
+                    )}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="font-serif text-2xl text-anthracite mb-2">{room.name}</h3>
+                    <p className="text-gray-600 font-light text-sm leading-relaxed mb-4 flex-grow">{room.desc}</p>
+                    <div className="flex items-center text-xs uppercase tracking-widest text-gold font-medium mt-auto">Ver detalles <ChevronRight className="w-3 h-3 ml-1" /></div>
+                </div>
+            </div>
+        );
+
+        const RoomModal = ({ room, onClose }) => {
+            const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+            const images = room.images || [room.image];
+            React.useEffect(() => { document.body.style.overflow = 'hidden'; return () => { document.body.style.overflow = 'unset'; }; }, []);
+            React.useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (e.key === 'Escape') onClose();
+                    if (e.key === 'ArrowRight') setCurrentImageIndex((prev) => (prev + 1) % images.length);
+                    if (e.key === 'ArrowLeft') setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [onClose, images.length]);
+            const nextImage = (e) => { e.stopPropagation(); setCurrentImageIndex((prev) => (prev + 1) % images.length); };
+            const prevImage = (e) => { e.stopPropagation(); setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length); };
+            const whatsappMessage = room.priceNote ? `Hola, me interesa reservar "${room.name}" (${room.priceNote}). ¿Tienen disponibilidad?` : `Hola, me interesa reservar la habitación ${room.name}. ¿Tienen disponibilidad?`;
+            const whatsappLink = `${hotelConfig.contact.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
+            return (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 animate-fade-in">
+                    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose}></div>
+                    <div className="relative bg-white w-full h-full md:h-[90vh] md:max-w-6xl md:rounded-lg shadow-2xl flex flex-col md:flex-row overflow-hidden animate-slide-up">
+                        <button onClick={onClose} className="absolute top-4 right-4 z-20 p-2 bg-white/80 rounded-full hover:bg-white text-anthracite transition-colors shadow-sm"><X className="w-6 h-6" /></button>
+                        <div className="w-full md:w-3/5 bg-gray-100 flex flex-col relative">
+                            <div className="flex-grow relative overflow-hidden aspect-[4/3] md:aspect-auto md:h-full">
+                                <img src={images[currentImageIndex]} alt={`${room.name} vista ${currentImageIndex + 1}`} className="w-full h-full object-cover" />
+                                {images.length > 1 && (<>
+                                    <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white text-anthracite rounded-full transition-colors backdrop-blur-sm"><ChevronLeft className="w-6 h-6" /></button>
+                                    <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white text-anthracite rounded-full transition-colors backdrop-blur-sm"><ChevronRight className="w-6 h-6" /></button>
+                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/40 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">{currentImageIndex + 1} / {images.length}</div>
+                                </>)}
+                            </div>
+                            {images.length > 1 && (
+                                <div className="h-20 bg-white border-t border-gray-100 flex items-center justify-center space-x-2 overflow-x-auto p-2 hide-scroll">
+                                    {images.map((img, idx) => (
+                                        <button key={idx} onClick={() => setCurrentImageIndex(idx)} className={`flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all ${currentImageIndex === idx ? 'border-gold opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}>
+                                            <img src={img} alt={`Miniatura ${idx}`} className="w-full h-full object-cover" />
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        <div className="w-full md:w-2/5 flex flex-col h-full overflow-y-auto bg-white">
+                            <div className="p-8 md:p-12">
+                                <h2 className="font-serif text-3xl md:text-4xl text-anthracite mb-1">{room.name}</h2>
+                                <div className="flex items-baseline space-x-2 mb-4"><span className="text-2xl font-serif text-gold">${room.price}</span>{room.priceNote && <span className="text-sm text-gray-500 font-light">/ noche</span>}</div>
+                                <div className="w-12 h-0.5 bg-gold mb-8"></div>
+                                <p className="text-gray-600 font-light leading-relaxed mb-8 text-lg">{room.longDescription || room.desc}</p>
+                                <h4 className="font-serif text-xl text-anthracite mb-6">Amenidades</h4>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                                    {room.services && room.services.map((service, idx) => (
+                                        <div key={idx} className="flex items-center space-x-3 text-gray-700">
+                                            <span className="text-gold flex-shrink-0">{service.icon}</span>
+                                            <span className="text-sm font-medium">{service.text}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                {room.hasExtraNote && (
+                                    <div className="flex items-start space-x-3 bg-gold/5 border border-gold/20 rounded-lg p-4 mb-8">
+                                        <Heart className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
+                                        <p className="text-sm text-gold/80 leading-relaxed">{room.extraNote}</p>
+                                    </div>
+                                )}
+                                <div className="mt-auto pt-6 border-t border-gray-100">
+                                    <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-medium transition-colors rounded shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200">
+                                        <MessageCircle className="w-5 h-5 mr-2" /> Reservar por WhatsApp
+                                    </a>
+                                    <p className="text-center text-xs text-gray-400 mt-3">* {hotelConfig.footerNote}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const RoomsSection = ({ onRoomClick }) => (
+            <section id="habitaciones" className="py-24 px-6 bg-[#F9F7F2]">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="font-serif text-4xl text-anthracite mb-4">Nuestras Habitaciones</h2>
+                        <div className="w-16 h-0.5 bg-gold mx-auto"></div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {hotelConfig.rooms.map(room => (<RoomCard key={room.id} room={room} onClick={() => onRoomClick(room)} />))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const EventsSection = () => {
+            const [isVisible, setIsVisible] = React.useState(false);
+            const sectionRef = React.useRef(null);
+            React.useEffect(() => {
+                const observer = new IntersectionObserver(
+                    ([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); } },
+                    { threshold: 0.2 }
+                );
+                if (sectionRef.current) observer.observe(sectionRef.current);
+                return () => observer.disconnect();
+            }, []);
+
+            const eventTypes = [
+                { label: "Bodas Boutique", icon: <Heart className="w-5 h-5" /> },
+                { label: "Sesiones de Fotos", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg> },
+                { label: "Retiros", icon: <Mountain className="w-5 h-5" /> },
+                { label: "Eventos Corporativos", icon: <Users className="w-5 h-5" /> }
+            ];
+
+            const whatsappMessage = "Hola, me interesa cotizar un evento en La Casa Bola. ¿Podrían brindarme más información sobre disponibilidad y precios?";
+            const whatsappLink = `${hotelConfig.contact.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
+
+            return (
+                <section id="eventos" ref={sectionRef} className="relative overflow-hidden">
+                    <div className="relative min-h-[85vh] flex items-center">
+                        <div className="absolute inset-0 z-0">
+                            <img
+                                src="https://i.ibb.co/jPTvCByQ/75e5af37-3842-42fc-9c94-f5878cf504c1.jpg"
+                                alt="Eventos en La Casa Bola"
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-r from-anthracite/80 via-anthracite/60 to-anthracite/40"></div>
+                            <div className="absolute inset-0 bg-anthracite/20"></div>
+                        </div>
+                        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-24">
+                            <div className={`max-w-2xl transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-0.5 bg-gold"></div>
+                                    <span className="text-gold text-sm uppercase tracking-[0.2em] font-medium">Eventos</span>
+                                </div>
+                                <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight">
+                                    Eventos Especiales
+                                </h2>
+                                <p className="font-serif text-xl md:text-2xl text-white/80 mb-8 italic">
+                                    El escenario perfecto para tus momentos inolvidables
+                                </p>
+                                <p className="text-white/70 font-light leading-relaxed text-lg mb-12 max-w-xl">
+                                    En La Casa Bola contamos con el espacio ideal para realizar cualquier tipo de celebración: bodas boutique, sesiones de fotos, retiros o eventos corporativos, todo rodeado de naturaleza y con una arquitectura única.
+                                </p>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                                    {eventTypes.map((event, idx) => (
+                                        <div
+                                            key={idx}
+                                            className="border border-white/20 bg-white/[0.06] backdrop-blur-sm px-4 py-4 text-center hover:bg-white/[0.12] hover:border-gold/40 transition-all duration-400"
+                                            style={{ transitionDelay: isVisible ? `${idx * 100 + 400}ms` : '0ms', opacity: isVisible ? 1 : 0, transform: isVisible ? 'translateY(0)' : 'translateY(15px)' }}
+                                        >
+                                            <div className="text-gold mb-2 flex justify-center">{event.icon}</div>
+                                            <span className="text-white/90 text-sm font-light">{event.label}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <a
+                                    href={whatsappLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-3 bg-[#B89B62] text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#a0874f] transition-all duration-300 shadow-lg hover:shadow-gold/25 group"
+                                    style={{ transitionDelay: isVisible ? '900ms' : '0ms', opacity: isVisible ? 1 : 0, transform: isVisible ? 'translateY(0)' : 'translateY(15px)' }}
+                                >
+                                    Cotizar mi evento
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 transition-transform duration-300"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const LocationAndPolicies = () => (
+            <section id="ubicacion">
+                <div className="group relative w-full h-[550px] md:h-[600px] overflow-hidden">
+                    <iframe
+                        src="https://maps.google.com/maps?q=Ecohotel+La+Casa+Bola+Guayllabamba+Ecuador&z=15&t=&ie=UTF8&iwloc=A&output=embed"
+                        className="absolute inset-0 w-full h-full border-0 sepia-[0.35] saturate-[0.7] brightness-[0.88] contrast-[1.08] group-hover:sepia-0 group-hover:saturate-100 group-hover:brightness-100 group-hover:contrast-100 transition-all duration-700 ease-in-out"
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Ubicación Ecohotel La Casa Bola"
+                        allowFullScreen
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-anthracite/60 via-anthracite/30 to-transparent z-10 pointer-events-none"></div>
+                    <div className="absolute inset-0 z-20 flex items-center pointer-events-none">
+                        <div className="mx-6 md:mx-12 lg:mx-20 max-w-lg pointer-events-auto">
+                            <div className="bg-white/[0.92] backdrop-blur-2xl p-8 md:p-10 shadow-2xl shadow-black/10 border border-white/60">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center"><MapPin className="w-5 h-5 text-gold" /></div>
+                                    <h2 className="font-serif text-3xl md:text-4xl text-anthracite">Ubicación</h2>
+                                </div>
+                                <div className="w-10 h-0.5 bg-gold mb-6"></div>
+                                <p className="text-gray-600 font-light leading-relaxed mb-8">{hotelConfig.location.address}</p>
+                                <a href={hotelConfig.location.mapLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3.5 border-2 border-gold text-gold text-sm uppercase tracking-wider hover:bg-gold hover:text-white transition-all duration-300">
+                                    Ver en Google Maps
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="politicas" className="py-24 px-6 bg-white">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="font-serif text-4xl text-anthracite mb-4">Políticas y Condiciones de Estadía</h2>
+                            <div className="w-16 h-0.5 bg-gold mx-auto mb-8"></div>
+                            <p className="text-gray-500 font-light leading-relaxed max-w-2xl mx-auto">Queremos que disfrutes tu tiempo con nosotros y que tu experiencia sea tranquila y agradable. Para ello, te compartimos algunas recomendaciones importantes:</p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            {policies.map((policy, index) => (
+                                <div key={index} className="border border-gold/15 bg-white p-7 hover:border-gold/40 transition-all duration-400 group"
+                                    style={{ boxShadow: 'none', transition: 'all 0.35s ease' }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '3px 5px 20px rgba(184, 155, 98, 0.1)' }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none' }}
+                                >
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="w-10 h-10 rounded-full bg-gold/[0.06] flex items-center justify-center text-gold flex-shrink-0 group-hover:bg-gold/10 transition-colors duration-300">{policy.icon}</div>
+                                        <div className="flex items-baseline gap-2.5">
+                                            <span className="text-gold/30 font-serif text-xs tracking-wider">{policy.number}</span>
+                                            <h3 className="font-serif text-lg text-anthracite leading-snug">{policy.title}</h3>
+                                        </div>
+                                    </div>
+                                    <p className="text-gray-500 font-light leading-relaxed text-[13.5px] pl-[52px]">{policy.text}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div className="bg-[#FAF8F4] border-t border-b border-gold/10 py-14 px-6">
+                    <div className="max-w-xl mx-auto text-center">
+                        <Heart className="w-5 h-5 text-gold mx-auto mb-4 opacity-70" />
+                        <p className="text-gray-600 font-light leading-relaxed text-sm italic">Nuestro mayor deseo es que te sientas cómodo, relajado y bien atendido. Gracias por ayudarnos a mantener un ambiente agradable para todos.</p>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+            <footer id="contacto" className="bg-[#F9F7F2] pt-20 pb-10 border-t border-gray-200">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                        <div>
+                            <h4 className="font-serif text-2xl text-anthracite mb-6">La Casa Bola</h4>
+                            <p className="text-gray-600 font-light leading-relaxed mb-6">Una experiencia única de lujo minimalista en armonía con el entorno de Guayllabamba.</p>
+                            <div className="flex space-x-4">
+                                <a href={hotelConfig.contact.socials.facebook} target="_blank" rel="noopener noreferrer" className="text-anthracite hover:text-gold transition-colors"><Facebook className="w-5 h-5" /></a>
+                                <a href={hotelConfig.contact.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-anthracite hover:text-gold transition-colors"><Instagram className="w-5 h-5" /></a>
+                                <a href={hotelConfig.contact.socials.tiktok} target="_blank" rel="noopener noreferrer" className="text-anthracite hover:text-gold transition-colors"><TikTok className="w-5 h-5" /></a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 className="font-serif text-xl text-anthracite mb-6">Contacto</h4>
+                            <ul className="space-y-4">
+                                <li className="flex items-center space-x-3 text-gray-600 font-light"><Phone className="w-4 h-4 text-gold flex-shrink-0" /><a href="tel:+593987908530" className="hover:text-gold transition-colors">+593 98 790 8530</a></li>
+                                <li className="flex items-center space-x-3 text-gray-600 font-light"><Mail className="w-4 h-4 text-gold flex-shrink-0" /><a href={`mailto:${hotelConfig.contact.email}`} className="hover:text-gold transition-colors">{hotelConfig.contact.email}</a></li>
+                                <li className="flex items-center space-x-3 text-gray-600 font-light"><span className="text-gold font-serif">@</span><span>{hotelConfig.contact.socials.handle}</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="font-serif text-xl text-anthracite mb-6">¿Dudas?</h4>
+                            <p className="text-gray-600 font-light text-sm mb-4">Escríbenos directamente por WhatsApp para una respuesta inmediata.</p>
+                            <a href={hotelConfig.contact.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full py-3 border border border-anthracite text-anthracite hover:bg-anthracite hover:text-white transition-all text-sm uppercase tracking-widest">Chat WhatsApp</a>
+                        </div>
+                    </div>
+                    <div className="text-center border-t border-gray-200 pt-8">
+                        <p className="text-gray-400 text-xs">© {new Date().getFullYear()} Ecohotel La Casa Bola. Todos los derechos reservados.</p>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        const Chatbot = () => {
+            const [isOpen, setIsOpen] = React.useState(false);
+            return (
+                <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
+                    {isOpen && (
+                        <div className="bg-white p-4 rounded-lg shadow-xl mb-4 border border-gray-100 max-w-xs animate-slide-up">
+                            <p className="font-serif text-lg text-anthracite mb-2">¿Necesitas ayuda?</p>
+                            <p className="text-sm text-gray-600 mb-4">Estamos disponibles para asistirte con tu reserva.</p>
+                            <a href={hotelConfig.contact.whatsapp} target="_blank" rel="noopener noreferrer" className="block w-full text-center bg-green-500 text-white py-2 rounded text-sm font-medium hover:bg-green-600 transition-colors">Ir a WhatsApp</a>
+                        </div>
+                    )}
+                    <button onClick={() => setIsOpen(!isOpen)} className="bg-[#B89B62] text-white p-4 rounded-full shadow-lg hover:bg-[#a0874f] transition-all transform hover:scale-105 flex items-center justify-center">
+                        {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+                    </button>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [selectedRoom, setSelectedRoom] = React.useState(null);
+            const handleClose = React.useCallback(() => setSelectedRoom(null), []);
+            return (
+                <div className="min-h-screen flex flex-col font-sans text-anthracite">
+                    <Navbar />
+                    <main>
+                        <Hero />
+                        <RoomsSection onRoomClick={setSelectedRoom} />
+                        <EventsSection />
+                        <LocationAndPolicies />
+                    </main>
+                    <Footer />
+                    <Chatbot />
+                    {selectedRoom && <RoomModal room={selectedRoom} onClose={handleClose} />}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
