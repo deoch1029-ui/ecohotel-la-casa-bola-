@@ -1,5 +1,5 @@
 export const BRAND_LOGO_URL =
-  "https://raw.githubusercontent.com/deoch1029-ui/ecohotel-la-casa-bola-/refs/heads/main/logo%20casa%20bola.svg";
+  "https://raw.githubusercontent.com/deoch1029-ui/ecohotel-la-casa-bola-/refs/heads/main/logocasabola-ezgif.com-gif-maker.svg";
 
 export const HERO_IMAGE_URL =
   "https://i.ibb.co/MkVbdSWT/Whats-App-Image-2026-04-12-at-12-10-00-PM-1-upscayl-4x-upscayl-standard-4x.png";
