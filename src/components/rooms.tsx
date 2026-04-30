@@ -193,7 +193,7 @@ function RoomModal({
             )}
 
             <div className="mt-auto pt-6 border-t border-gray-100 space-y-3">
-              <a href="#reservar" onClick={onClose} className="flex items-center justify-center w-full py-3 border border-anthracite text-anthracite hover:bg-anthracite hover:text-white font-medium transition-colors text-sm uppercase tracking-widest gap-2">
+              <a href="#reservas" onClick={onClose} className="flex items-center justify-center w-full py-3 border border-anthracite text-anthracite hover:bg-anthracite hover:text-white font-medium transition-colors text-sm uppercase tracking-widest gap-2">
                 <CalendarDays className="w-4 h-4" /> Ver disponibilidad
               </a>
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-medium transition-colors rounded shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200">
