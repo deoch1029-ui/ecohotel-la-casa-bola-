@@ -66,13 +66,15 @@ function RoomModal({
   const overlayRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onCloseRef.current();
       if (e.key === "ArrowLeft") setCurrentImg((i) => (i > 0 ? i - 1 : room.images.length - 1));
       if (e.key === "ArrowRight") setCurrentImg((i) => (i < room.images.length - 1 ? i + 1 : 0));
     };
@@ -83,13 +85,13 @@ function RoomModal({
       document.body.style.overflow = prevOverflow || "";
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose, room.images.length]);
+  }, [room.images.length]);
 
   const handleOverlayClick = useCallback(
     (e: React.MouseEvent) => {
-      if (e.target === overlayRef.current) onClose();
+      if (e.target === overlayRef.current) onCloseRef.current();
     },
-    [onClose]
+    []
   );
 
   const handleTouchStart = (e: React.TouchEvent) => {

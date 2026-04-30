@@ -83,6 +83,7 @@ body { background-color: #F9F7F2; color: #2C2C2C; -webkit-font-smoothing: antial
   100% { transform: translateY(0); opacity: 1; }
 }
 .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+.animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
 
 @keyframes fadeIn {
   0% { opacity: 0; }
