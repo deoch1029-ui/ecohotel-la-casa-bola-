@@ -3,27 +3,11 @@
 import { useState, useMemo } from "react";
 import { rooms, type Room, WHATSAPP_NUMBER } from "@/lib/config";
 import { ChevronLeft, ChevronRight, MessageCircle, CalendarDays } from "@/components/icons";
-
-const MONTHS_ES = [
-  "Enero","Febrero","Marzo","Abril","Mayo","Junio",
-  "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre",
-];
-const DAYS_ES = ["Do","Lu","Ma","Mi","Ju","Vi","Sa"];
-
-function formatDate(date: Date): string {
-  return `${date.getDate()} de ${MONTHS_ES[date.getMonth()]} de ${date.getFullYear()}`;
-}
-
-function sameDay(a: Date, b: Date) {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-}
-
-function isInRange(d: Date, start: Date, end: Date) {
-  const t = d.getTime();
-  return t > start.getTime() && t < end.getTime();
-}
+import { useLanguage } from "@/lib/i18n";
+import Image from "next/image";
 
 export default function BookingSection() {
+  const { t, language } = useLanguage();
   const sortedRooms = useMemo(() => [...rooms].sort((a, b) => a.price - b.price), []);
 
   const [step, setStep] = useState<1 | 2>(1);
@@ -51,6 +35,14 @@ export default function BookingSection() {
   const firstDay = new Date(viewYear, viewMonth, 1).getDay();
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
 
+  const getMonthName = (month: number) => t(`cal.month.${month}`);
+
+  const DAYS = Array.from({ length: 7 }, (_, i) => t(`cal.day.${i}`));
+
+  function formatDate(date: Date): string {
+    return `${date.getDate()} de ${getMonthName(date.getMonth())} de ${date.getFullYear()}`;
+  }
+
   const prevMonth = () => {
     if (viewMonth === 0) { setViewMonth(11); setViewYear((y) => y - 1); }
     else setViewMonth((m) => m - 1);
@@ -59,6 +51,15 @@ export default function BookingSection() {
     if (viewMonth === 11) { setViewMonth(0); setViewYear((y) => y + 1); }
     else setViewMonth((m) => m + 1);
   };
+
+  function sameDay(a: Date, b: Date) {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  }
+
+  function isInRange(d: Date, start: Date, end: Date) {
+    const dt = d.getTime();
+    return dt > start.getTime() && dt < end.getTime();
+  }
 
   const handleDayClick = (day: number) => {
     const clicked = new Date(viewYear, viewMonth, day);
@@ -102,8 +103,8 @@ export default function BookingSection() {
   };
 
   const handleSendWhatsApp = () => {
-    const nombre = guestName.trim() || "huésped";
-    const msg = `🏡 *SOLICITUD DE RESERVA - La Casa Bola*\n\n👤 Nombre: ${nombre}\n🛏️ Habitación: ${room.name}\n📅 Check-in: ${formatDate(checkIn!)}\n📅 Check-out: ${formatDate(checkOut!)}\n🌙 Noches: ${nights}\n💰 Total estimado: $${total} USD\n\n¿Tienen disponibilidad para estas fechas?`;
+    const nombre = guestName.trim() || t("booking.waGuest");
+    const msg = `${t("booking.waPrefix")} ${nombre}\n${t("booking.waRoom")} ${t(`room.${room.id}.name`)}\n${t("booking.waCheckin")} ${formatDate(checkIn!)}\n${t("booking.waCheckout")} ${formatDate(checkOut!)}\n${t("booking.waNights")} ${nights}\n${t("booking.waTotal")} $${total} USD\n\n${t("booking.waQuestion")}`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -111,9 +112,9 @@ export default function BookingSection() {
     <section id="reservas" className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl text-anthracite mb-4">Reserva tu Estadía</h2>
+          <h2 className="font-serif text-4xl text-anthracite mb-4">{t("booking.title")}</h2>
           <div className="w-16 h-0.5 bg-gold mx-auto mb-6"></div>
-          <p className="text-gray-500 font-light max-w-xl mx-auto">Selecciona tu habitación, las fechas que deseas y te enviaremos la confirmación por WhatsApp.</p>
+          <p className="text-gray-500 font-light max-w-xl mx-auto">{t("booking.subtitle")}</p>
         </div>
 
         <div className="max-w-5xl mx-auto">
@@ -122,13 +123,13 @@ export default function BookingSection() {
               {/* Left: Room selector + Calendar */}
               <div className="bg-white border border-gray-100 p-6 shadow-sm">
                 <div className="mb-6">
-                  <label className="block text-xs uppercase tracking-widest text-gray-500 mb-3 font-medium">Selecciona tu habitación</label>
+                  <label className="block text-xs uppercase tracking-widest text-gray-500 mb-3 font-medium">{t("booking.selectRoom")}</label>
                   <div className="space-y-2 max-h-48 overflow-y-auto hide-scroll">
                     {sortedRooms.map((r) => (
                       <button key={r.id} onClick={() => setSelectedRoomId(r.id)}
                         className={`w-full text-left px-4 py-3 border text-sm transition-all duration-200 flex justify-between items-center ${selectedRoomId === r.id ? "border-gold bg-gold/5 text-anthracite" : "border-gray-100 hover:border-gold/40 text-gray-600"}`}>
-                        <span className="font-medium">{r.name}</span>
-                        <span className={`font-serif font-semibold ${selectedRoomId === r.id ? "text-gold" : "text-gray-400"}`}>${r.price}/noche</span>
+                        <span className="font-medium">{t(`room.${r.id}.name`)}</span>
+                        <span className={`font-serif font-semibold ${selectedRoomId === r.id ? "text-gold" : "text-gray-400"}`}>${r.price}{t("cal.perNight")}</span>
                       </button>
                     ))}
                   </div>
@@ -136,12 +137,12 @@ export default function BookingSection() {
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <button onClick={prevMonth} className="p-1 hover:text-gold transition-colors"><ChevronLeft className="w-5 h-5" /></button>
-                    <span className="font-serif text-anthracite font-semibold">{MONTHS_ES[viewMonth]} {viewYear}</span>
+                    <span className="font-serif text-anthracite font-semibold">{getMonthName(viewMonth)} {viewYear}</span>
                     <button onClick={nextMonth} className="p-1 hover:text-gold transition-colors"><ChevronRight className="w-5 h-5" /></button>
                   </div>
                   <div className="grid grid-cols-7 mb-2">
-                    {DAYS_ES.map((d) => (
-                      <div key={d} className="w-8 h-7 md:w-9 md:h-7 flex items-center justify-center text-[10px] md:text-xs text-gray-400 uppercase tracking-wider">{d}</div>
+                    {DAYS.map((d, idx) => (
+                      <div key={idx} className="w-8 h-7 md:w-9 md:h-7 flex items-center justify-center text-[10px] md:text-xs text-gray-400 uppercase tracking-wider">{d}</div>
                     ))}
                   </div>
                   <div className="grid grid-cols-7 gap-y-1">
@@ -156,7 +157,7 @@ export default function BookingSection() {
                     ))}
                   </div>
                   <p className="text-xs text-gray-400 text-center mt-4 font-light">
-                    {!checkIn ? "Selecciona la fecha de entrada" : !checkOut ? "Selecciona la fecha de salida" : "Rango seleccionado ✓"}
+                    {!checkIn ? t("booking.selectCheckin") : !checkOut ? t("booking.selectCheckout") : t("booking.rangeSelected")}
                   </p>
                 </div>
               </div>
@@ -164,43 +165,43 @@ export default function BookingSection() {
               {/* Right: Summary */}
               <div className="flex flex-col">
                 <div className="bg-white border border-gray-100 p-6 shadow-sm flex-grow">
-                  <h3 className="font-serif text-xl text-anthracite mb-4">Resumen de tu estadía</h3>
+                  <h3 className="font-serif text-xl text-anthracite mb-4">{t("booking.summary")}</h3>
                   <div className="w-10 h-0.5 bg-gold mb-6"></div>
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between items-start">
-                      <span className="text-sm text-gray-500">Habitación</span>
-                      <span className="text-sm font-medium text-anthracite text-right max-w-[55%]">{room.name}</span>
+                      <span className="text-sm text-gray-500">{t("booking.room")}</span>
+                      <span className="text-sm font-medium text-anthracite text-right max-w-[55%]">{t(`room.${room.id}.name`)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-500">Precio por noche</span>
+                      <span className="text-sm text-gray-500">{t("booking.pricePerNight")}</span>
                       <span className="text-sm font-serif text-gold font-semibold">${room.price} USD</span>
                     </div>
                     <div className="border-t border-gray-50 pt-4">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-sm text-gray-500">Check-in</span>
+                        <span className="text-sm text-gray-500">{t("booking.checkin")}</span>
                         <span className={`text-sm font-medium ${checkIn ? "text-anthracite" : "text-gray-300"}`}>{checkIn ? formatDate(checkIn) : "—"}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">Check-out</span>
+                        <span className="text-sm text-gray-500">{t("booking.checkout")}</span>
                         <span className={`text-sm font-medium ${checkOut ? "text-anthracite" : "text-gray-300"}`}>{checkOut ? formatDate(checkOut) : "—"}</span>
                       </div>
                     </div>
                     {nights > 0 && (
                       <div className="border-t border-gray-50 pt-4 space-y-2">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-500">Noches</span>
+                          <span className="text-sm text-gray-500">{t("booking.nights")}</span>
                           <span className="text-sm font-medium text-anthracite">{nights}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm font-semibold text-anthracite">Total estimado</span>
+                          <span className="text-sm text-semibold text-anthracite">{t("booking.totalEstimate")}</span>
                           <span className="text-xl font-serif text-gold font-semibold">${total} USD</span>
                         </div>
-                        <p className="text-xs text-gray-400">*Precio por pareja. Sujeto a confirmación de disponibilidad.</p>
+                        <p className="text-xs text-gray-400">{t("booking.priceDisclaimer")}</p>
                       </div>
                     )}
                   </div>
                   <div className="relative overflow-hidden h-32 mb-6">
-                    <img src={room.images[0]} alt={room.name} className="w-full h-full object-cover" />
+                    <Image src={room.images[0]} alt={t(`room.${room.id}.name`)} fill className="object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                   </div>
                   <button
@@ -208,7 +209,7 @@ export default function BookingSection() {
                     disabled={!checkIn || !checkOut}
                     className={`w-full py-4 text-sm uppercase tracking-widest font-medium transition-all duration-300 ${checkIn && checkOut ? "bg-[#B89B62] text-white hover:bg-[#a0874f] shadow-lg" : "bg-gray-100 text-gray-400 cursor-not-allowed"}`}
                   >
-                    Continuar con la reserva
+                    {t("booking.continue")}
                   </button>
                 </div>
               </div>
@@ -221,43 +222,43 @@ export default function BookingSection() {
                 <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-4">
                   <CalendarDays className="w-8 h-8 text-gold" />
                 </div>
-                <h3 className="font-serif text-2xl text-anthracite mb-2">Confirma tu reserva</h3>
-                <p className="text-sm text-gray-500 font-light">Tu solicitud se enviará por WhatsApp y nuestro equipo confirmará la disponibilidad.</p>
+                <h3 className="font-serif text-2xl text-anthracite mb-2">{t("booking.confirm")}</h3>
+                <p className="text-sm text-gray-500 font-light">{t("booking.confirmSubtitle")}</p>
               </div>
               <div className="bg-[#F9F7F2] p-5 mb-6 space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Habitación</span>
-                  <span className="font-medium text-anthracite">{room.name}</span>
+                  <span className="text-gray-500">{t("booking.room")}</span>
+                  <span className="font-medium text-anthracite">{t(`room.${room.id}.name`)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Check-in</span>
+                  <span className="text-gray-500">{t("booking.checkin")}</span>
                   <span className="font-medium text-anthracite">{checkIn ? formatDate(checkIn) : ""}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Check-out</span>
+                  <span className="text-gray-500">{t("booking.checkout")}</span>
                   <span className="font-medium text-anthracite">{checkOut ? formatDate(checkOut) : ""}</span>
                 </div>
                 <div className="flex justify-between text-sm border-t border-gray-200 pt-3">
-                  <span className="font-semibold text-anthracite">Total estimado</span>
+                  <span className="font-semibold text-anthracite">{t("booking.totalEstimate")}</span>
                   <span className="font-serif text-gold font-semibold text-lg">${total} USD</span>
                 </div>
               </div>
               <div className="mb-6">
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-medium">Tu nombre (opcional)</label>
+                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2 font-medium">{t("booking.guestName")}</label>
                 <input
                   type="text"
                   value={guestName}
                   onChange={(e) => setGuestName(e.target.value)}
-                  placeholder="¿Cómo te llamas?"
+                  placeholder={t("booking.guestNamePlaceholder")}
                   className="w-full border border-gray-200 px-4 py-3 text-sm text-anthracite focus:outline-none focus:border-gold transition-colors bg-white"
                 />
               </div>
               <button onClick={handleSendWhatsApp}
                 className="flex items-center justify-center w-full py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-medium transition-colors shadow-lg text-sm uppercase tracking-widest gap-2 mb-3">
-                <MessageCircle className="w-5 h-5" /> Enviar por WhatsApp
+                <MessageCircle className="w-5 h-5" /> {t("booking.sendWhatsapp")}
               </button>
               <button onClick={() => setStep(1)} className="w-full py-3 text-sm text-gray-400 hover:text-anthracite transition-colors">
-                ← Volver al calendario
+                {t("booking.backCalendar")}
               </button>
             </div>
           )}

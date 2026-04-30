@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { HERO_IMAGE_URL, WHATSAPP_NUMBER } from "@/lib/config";
-import { ChevronDown, MessageCircle } from "@/components/icons";
+import { ChevronDown } from "@/components/icons";
+import { useLanguage } from "@/lib/i18n";
+import Image from "next/image";
 
 export default function Hero() {
   const [visible, setVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
@@ -15,24 +18,26 @@ export default function Hero() {
   return (
     <header id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img
+        <Image
           src={HERO_IMAGE_URL}
           alt="Ecohotel La Casa Bola - Vista exterior de las habitaciones esféricas en el valle de Guayllabamba"
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
       <div className={`relative z-10 text-center px-4 max-w-4xl mx-auto ${visible ? "animate-fade-in-up" : "opacity-0"}`}>
-        <h1 className="sr-only">Ecohotel La Casa Bola - Tu refugio esférico en el valle de Guayllabamba</h1>
+        <h1 className="sr-only">Ecohotel La Casa Bola - {t("hero.title")}</h1>
         <p className="font-serif text-4xl md:text-6xl lg:text-7xl text-white mb-6 leading-tight drop-shadow-lg">
-          Tu refugio esférico en el valle de Guayllabamba
+          {t("hero.title")}
         </p>
         <p className="text-white/90 text-lg md:text-xl mb-10 font-light tracking-wide drop-shadow-md">
-          Conexión pura con la naturaleza
+          {t("hero.subtitle")}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="#reservas" className="inline-block bg-[#B89B62] text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#a0874f] transition-colors duration-300 shadow-lg">
-            Reservar Ahora
+            {t("hero.cta")}
           </a>
           <a
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -40,7 +45,7 @@ export default function Hero() {
             rel="noopener noreferrer"
             className="inline-block border border-white text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-white hover:text-anthracite transition-colors duration-300"
           >
-            WhatsApp
+            {t("hero.whatsapp")}
           </a>
         </div>
       </div>

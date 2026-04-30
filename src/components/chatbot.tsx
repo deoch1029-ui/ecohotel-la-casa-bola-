@@ -1,116 +1,164 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useSyncExternalStore } from "react";
 import { Sparkles, X, Send } from "@/components/icons";
 import { WHATSAPP_NUMBER } from "@/lib/config";
+import { useLanguage } from "@/lib/i18n";
 
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
 }
 
-const QUICK_REPLIES = [
-  "¿Cuánto cuesta la habitación con jacuzzi?",
-  "¿Cómo llego desde Quito?",
-  "¿Aceptan mascotas?",
-  "¿Tienen disponibilidad este fin de semana?",
-];
-
-function generateLocalResponse(text: string): string {
-  const q = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-  if (q.includes("precio") || q.includes("cuesta") || q.includes("valor") || q.includes("tarifa") || q.includes("costo") || q.includes("cuanto")) {
-    return "Tenemos 3 rangos de precios por pareja/noche:\n\n• Habitaciones 1 y 2: $45 USD (estándar)\n• Habitaciones 3, 4 y 5: $60 USD (confort)\n• Habitaciones 6, 7 y 8: $80 USD (con hidromasaje/jacuzzi y champán incluido)\n\n✨ Decoración romántica opcional con costo adicional. ¿Te interesa alguna en particular?";
-  }
-  if (q.includes("jacuzzi") || q.includes("hidromasaje") || q.includes("spa") || q.includes("champ") || q.includes("burbuja")) {
-    return "Nuestras Habitaciones 6, 7 y 8 ($80 USD/noche) cuentan con hidromasaje/jacuzzi privado y una botella de champán de bienvenida. 🥂✨ ¿Deseas reservar alguna de ellas?";
-  }
-  if (q.includes("ubicacion") || q.includes("direccion") || q.includes("llegar") || q.includes("quito") || q.includes("donde") || q.includes("lejos")) {
-    return "Estamos en el sector Guayllabamba, vía Pueblo Viejo, a solo 35 minutos de Quito. 📍 Puedes ver el mapa exacto en la sección de Ubicación de esta página.";
-  }
-  if (q.includes("mascota") || q.includes("perro") || q.includes("mascotas") || q.includes("gato") || q.includes("animal")) {
-    return "Para consultas sobre el ingreso de mascotas, te recomiendo escribirle directamente al dueño por WhatsApp para confirmar las condiciones. 🐾\n\n📱 https://wa.me/" + WHATSAPP_NUMBER;
-  }
-  if (q.includes("disponibilidad") || q.includes("reservar") || q.includes("fecha") || q.includes("fin de semana") || q.includes("semana santa") || q.includes("feriado")) {
-    return "Para confirmar disponibilidad de fechas específicas, lo mejor es usar nuestro sistema de reservas en la página o escribirle al dueño por WhatsApp. 📅\n\n📱 https://wa.me/" + WHATSAPP_NUMBER;
-  }
-  if (q.includes("evento") || q.includes("boda") || q.includes("matrimonio") || q.includes("foto") || q.includes("corporativo") || q.includes("cumplea") || q.includes("fiesta")) {
-    return "¡Sí! Hacemos bodas boutique, sesiones de fotos, retiros y eventos corporativos. 🎉 Para cotizar y revisar disponibilidad, escríbenos por WhatsApp:\n\n📱 https://wa.me/" + WHATSAPP_NUMBER;
-  }
-  if (q.includes("wifi") || q.includes("internet") || q.includes("conexion")) {
-    return "¡Sí! Todas nuestras habitaciones cuentan con WiFi. Las estándar tienen WiFi de alta velocidad y las suites premium tienen WiFi Premium. 📶";
-  }
-  if (q.includes("contacto") || q.includes("telefono") || q.includes("email") || q.includes("correo") || q.includes("whatsapp") || q.includes("instagram")) {
-    return "Puedes contactarnos por:\n📞 WhatsApp: +593 98 790 8530\n✉️ Email: ecohotelcasabola@gmail.com\n📱 Instagram: @lacasabola";
-  }
-  if (q.includes("check-in") || q.includes("entrada") || q.includes("check-out") || q.includes("salida") || q.includes("hora")) {
-    return "El horario de check-in y check-out se coordina directamente por WhatsApp para darte la mejor atención. 🕒 Escríbenos al +593 98 790 8530.";
-  }
-  if (q.includes("decoracion") || q.includes("romantica") || q.includes("romantico") || q.includes("aniversario") || q.includes("sorpresa") || q.includes("petalos")) {
-    return "¡Claro! Todas las habitaciones tienen decoración romántica opcional por un valor adicional. 💖 Para agregarla, solo indícalo al momento de tu reserva por WhatsApp.\n\n📱 https://wa.me/" + WHATSAPP_NUMBER;
-  }
-  if (q.includes("hola") || q.includes("buenas") || q.includes("hey") || q.includes("saludos")) {
-    return "¡Hola! 🌿 Bienvenido a La Casa Bola. ¿En qué puedo ayudarte? Puedo contarte sobre nuestras habitaciones, precios, eventos o ubicación.";
-  }
-  if (q.includes("gracias") || q.includes("genial") || q.includes("perfecto")) {
-    return "¡Con mucho gusto! 😊 Si necesitas algo más, aquí estoy. O si prefieres atención personalizada, puedes escribir al WhatsApp: +593 98 790 8530";
-  }
-  return "No tengo esa información en mi sistema, pero no te preocupes. 🌿 Puedes escribirle directamente al dueño por WhatsApp y te ayudará encantado:\n\n📱 https://wa.me/" + WHATSAPP_NUMBER;
-}
-
 const STORAGE_KEY = "bola-chat-history";
 
-export default function BolaChat() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>(() => {
-    try {
-      const saved = typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
-      if (saved) {
-        const parsed = JSON.parse(saved) as ChatMessage[];
-        if (parsed.length > 0) return parsed;
+// In-memory cache for fast access within the same render
+let chatCache: ChatMessage[] | null = null;
+const chatListeners = new Set<() => void>();
+
+function notifyChatListeners() {
+  chatListeners.forEach((l) => l());
+}
+
+function getMessagesFromStorage(): ChatMessage[] {
+  if (chatCache !== null) return chatCache;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved) as ChatMessage[];
+      if (parsed.length > 0) {
+        chatCache = parsed;
+        return parsed;
       }
-    } catch { /* ignore */ }
-    return [
-      { role: "assistant", content: "¡Hola! Soy Bola 🌿, tu asistente del Ecohotel La Casa Bola. ¿En qué puedo ayudarte hoy? Puedo contarte sobre nuestras habitaciones, precios, ubicación o cualquier duda que tengas. 😊" },
-    ];
-  });
+    }
+  } catch { /* ignore */ }
+  return [];
+}
+
+function saveMessagesToStorage(msgs: ChatMessage[]) {
+  chatCache = msgs;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs.slice(-20)));
+  } catch { /* ignore */ }
+  notifyChatListeners();
+}
+
+function subscribeToChat(callback: () => void): () => void {
+  chatListeners.add(callback);
+  return () => { chatListeners.delete(callback); };
+}
+
+function getChatSnapshot(): ChatMessage[] {
+  return getMessagesFromStorage();
+}
+
+function getChatServerSnapshot(): ChatMessage[] {
+  return [];
+}
+
+export default function BolaChat() {
+  const { t } = useLanguage();
+  const persistedMessages = useSyncExternalStore(subscribeToChat, getChatSnapshot, getChatServerSnapshot);
+
+  // Compute full messages: use persisted or show greeting
+  const messages = persistedMessages.length > 0
+    ? persistedMessages
+    : [{ role: "assistant" as const, content: t("chat.greeting") }];
+
+  const getQuickReplies = useCallback(() => [
+    t("chat.quick1"),
+    t("chat.quick2"),
+    t("chat.quick3"),
+    t("chat.quick4"),
+  ], [t]);
+
+  const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-20))); } catch { /* ignore */ }
-  }, [messages]);
-
+  // Scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  // Focus input when chat opens
   useEffect(() => {
     if (isOpen && inputRef.current) {
       setTimeout(() => inputRef.current?.focus(), 300);
     }
   }, [isOpen]);
 
+  const generateLocalResponse = useCallback((text: string): string => {
+    const q = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    if (q.includes("precio") || q.includes("cuesta") || q.includes("valor") || q.includes("tarifa") || q.includes("costo") || q.includes("cuanto") || q.includes("price") || q.includes("cost") || q.includes("how much")) {
+      return t("chat.price");
+    }
+    if (q.includes("jacuzzi") || q.includes("hidromasaje") || q.includes("spa") || q.includes("champ") || q.includes("burbuja") || q.includes("hot tub") || q.includes("whirlpool")) {
+      return t("chat.jacuzzi");
+    }
+    if (q.includes("ubicacion") || q.includes("direccion") || q.includes("llegar") || q.includes("quito") || q.includes("donde") || q.includes("lejos") || q.includes("location") || q.includes("direction") || q.includes("get there") || q.includes("how to get") || q.includes("where")) {
+      return t("chat.location");
+    }
+    if (q.includes("mascota") || q.includes("perro") || q.includes("mascotas") || q.includes("gato") || q.includes("animal") || q.includes("pet") || q.includes("dog") || q.includes("cat")) {
+      return t("chat.pets") + WHATSAPP_NUMBER;
+    }
+    if (q.includes("disponibilidad") || q.includes("reservar") || q.includes("fecha") || q.includes("fin de semana") || q.includes("semana santa") || q.includes("feriado") || q.includes("availability") || q.includes("book") || q.includes("reserve") || q.includes("weekend")) {
+      return t("chat.availability") + WHATSAPP_NUMBER;
+    }
+    if (q.includes("evento") || q.includes("boda") || q.includes("matrimonio") || q.includes("foto") || q.includes("corporativo") || q.includes("cumplea") || q.includes("fiesta") || q.includes("event") || q.includes("wedding") || q.includes("photo") || q.includes("corporate") || q.includes("party")) {
+      return t("chat.events") + WHATSAPP_NUMBER;
+    }
+    if (q.includes("wifi") || q.includes("internet") || q.includes("conexion") || q.includes("connection")) {
+      return t("chat.wifi");
+    }
+    if (q.includes("contacto") || q.includes("telefono") || q.includes("email") || q.includes("correo") || q.includes("whatsapp") || q.includes("instagram") || q.includes("contact") || q.includes("phone")) {
+      return t("chat.contact");
+    }
+    if (q.includes("check-in") || q.includes("entrada") || q.includes("check-out") || q.includes("salida") || q.includes("hora") || q.includes("check in") || q.includes("check out") || q.includes("time")) {
+      return t("chat.checkin");
+    }
+    if (q.includes("decoracion") || q.includes("romantica") || q.includes("romantico") || q.includes("aniversario") || q.includes("sorpresa") || q.includes("petalos") || q.includes("romantic") || q.includes("decoration") || q.includes("anniversary") || q.includes("surprise")) {
+      return t("chat.romantic") + WHATSAPP_NUMBER;
+    }
+    if (q.includes("hola") || q.includes("buenas") || q.includes("hey") || q.includes("saludos") || q.includes("hello") || q.includes("hi")) {
+      return t("chat.greeting2");
+    }
+    if (q.includes("gracias") || q.includes("genial") || q.includes("perfecto") || q.includes("thank") || q.includes("great") || q.includes("perfect")) {
+      return t("chat.thanks");
+    }
+    return t("chat.unknown") + WHATSAPP_NUMBER;
+  }, [t]);
+
   const sendMessage = useCallback((overrideText: string | null = null) => {
     const text = (overrideText || input).trim().slice(0, 500);
     if (!text || loading) return;
-    setMessages((prev) => [...prev, { role: "user", content: text }]);
+
+    const userMsg: ChatMessage = { role: "user", content: text };
+    const currentPersisted = getMessagesFromStorage();
+    const withUser = [...currentPersisted, userMsg];
+    saveMessagesToStorage(withUser);
     setInput("");
     setLoading(true);
+
     setTimeout(() => {
       const reply = generateLocalResponse(text);
-      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+      const assistantMsg: ChatMessage = { role: "assistant", content: reply };
+      const withReply = [...withUser, assistantMsg];
+      saveMessagesToStorage(withReply);
       setLoading(false);
     }, 600 + Math.random() * 800);
-  }, [input, loading]);
+  }, [input, loading, generateLocalResponse]);
 
   const handleKey = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   };
 
   const showQuickReplies = messages.length <= 3 && messages[messages.length - 1]?.role === "assistant";
+
+  const quickReplies = getQuickReplies();
 
   return (
     <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end" style={{ maxWidth: isOpen ? "380px" : "auto", width: isOpen ? "90vw" : "auto" }}>
@@ -123,10 +171,10 @@ export default function BolaChat() {
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-serif text-sm font-semibold leading-none">Bola ✨</p>
-              <p className="text-xs text-white/60 mt-0.5">Asistente de La Casa Bola</p>
+              <p className="font-serif text-sm font-semibold leading-none">{t("chat.bolaName")}</p>
+              <p className="text-xs text-white/60 mt-0.5">{t("chat.bolaRole")}</p>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-white/60 hover:text-white transition-colors flex-shrink-0" aria-label="Cerrar chat">
+            <button onClick={() => setIsOpen(false)} className="text-white/60 hover:text-white transition-colors flex-shrink-0" aria-label={t("chat.close")}>
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -164,7 +212,7 @@ export default function BolaChat() {
           {/* Quick replies */}
           {showQuickReplies && (
             <div className="px-3 py-2 flex gap-2 overflow-x-auto hide-scroll bg-white border-t border-gray-50">
-              {QUICK_REPLIES.map((q, i) => (
+              {quickReplies.map((q, i) => (
                 <button key={i} onClick={() => sendMessage(q)}
                   className="flex-shrink-0 text-xs bg-[#F9F7F2] border border-gold/20 text-gold px-3 py-1.5 rounded-full hover:bg-gold hover:text-white transition-all duration-200 whitespace-nowrap">
                   {q}
@@ -181,7 +229,7 @@ export default function BolaChat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKey}
-              placeholder="Escribe tu pregunta..."
+              placeholder={t("chat.placeholder")}
               className="flex-1 border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-gold transition-colors bg-[#F9F7F2] text-anthracite"
               disabled={loading}
               maxLength={500}
@@ -197,7 +245,7 @@ export default function BolaChat() {
       <button
         onClick={() => setIsOpen((o) => !o)}
         className="bg-anthracite text-white p-4 rounded-full shadow-xl hover:bg-[#3d3d3d] transition-all transform hover:scale-105 flex items-center justify-center relative"
-        aria-label={isOpen ? "Cerrar asistente Bola" : "Abrir asistente Bola"}
+        aria-label={isOpen ? t("chat.close") : t("chat.open")}
       >
         {isOpen ? <X className="w-6 h-6" /> : <Sparkles className="w-6 h-6" />}
         {!isOpen && (

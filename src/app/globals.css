@@ -95,6 +95,16 @@ body { background-color: #F9F7F2; color: #2C2C2C; -webkit-font-smoothing: antial
   100% { transform: translateY(0); opacity: 1; }
 }
 
+/* FAQ accordion animation */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+}
+.faq-answer.open {
+  max-height: 500px;
+}
+
 /* Base layer */
 @layer base {
   * {
@@ -103,4 +113,150 @@ body { background-color: #F9F7F2; color: #2C2C2C; -webkit-font-smoothing: antial
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* ─── Dark Mode ─── */
+.dark {
+  --color-background: #1a1a1a;
+  --color-foreground: #e8e4dc;
+  --color-anthracite: #e8e4dc;
+  --color-gold: #d4b87a;
+  --color-card: #242424;
+  --color-card-foreground: #e8e4dc;
+  --color-muted: #1a1a1a;
+  --color-muted-foreground: #9ca3af;
+  --color-border: #333;
+  --color-input: #333;
+}
+
+.dark body {
+  background-color: #1a1a1a;
+  color: #e8e4dc;
+}
+
+/* Navbar dark */
+.dark .bg-\[\#F9F7F2\]\/90 {
+  background-color: rgba(26, 26, 26, 0.9);
+}
+.dark .bg-\[\#F9F7F2\] {
+  background-color: #1a1a1a;
+}
+
+/* Cards */
+.dark .bg-white {
+  background-color: #242424;
+}
+.dark .border-gray-100 {
+  border-color: #333;
+}
+.dark .border-gray-200 {
+  border-color: #333;
+}
+.dark .border-gray-50 {
+  border-color: #2a2a2a;
+}
+
+/* Text */
+.dark .text-anthracite {
+  color: #e8e4dc;
+}
+.dark .text-gray-600 {
+  color: #9ca3af;
+}
+.dark .text-gray-500 {
+  color: #9ca3af;
+}
+.dark .text-gray-400 {
+  color: #6b7280;
+}
+.dark .text-gray-300 {
+  color: #4b5563;
+}
+
+/* Borders */
+.dark .border-gold\/15 {
+  border-color: rgba(212, 184, 122, 0.2);
+}
+.dark .border-gold\/20 {
+  border-color: rgba(212, 184, 122, 0.25);
+}
+
+/* Booking room selector */
+.dark .bg-gold\/5 {
+  background-color: rgba(212, 184, 122, 0.08);
+}
+.dark .border-gold\/40 {
+  border-color: rgba(212, 184, 122, 0.5);
+}
+
+/* Chat bubbles dark */
+.dark .chat-bubble-bola {
+  background-color: #2a2a2a;
+  color: #e8e4dc;
+  border-color: #333;
+}
+.dark .chat-bubble-user {
+  background-color: #d4b87a;
+}
+
+/* Calendar disabled */
+.dark .cal-disabled {
+  color: #4b5563;
+}
+
+/* Footer */
+.dark .border-gray-200 {
+  border-color: #333;
+}
+
+/* Policy cards dark */
+.dark .policy-card {
+  background-color: #242424;
+  border-color: rgba(212, 184, 122, 0.15);
+}
+
+/* FAQ section dark */
+.dark .bg-\[\#FAF8F4\] {
+  background-color: #1e1e1e;
+}
+
+/* Location overlay card dark */
+.dark .bg-white\/\[0\.92\] {
+  background-color: rgba(36, 36, 36, 0.95);
+}
+
+/* Input dark */
+.dark input {
+  background-color: #2a2a2a;
+  border-color: #333;
+  color: #e8e4dc;
+}
+.dark input::placeholder {
+  color: #6b7280;
+}
+.dark input:focus {
+  border-color: #d4b87a;
+}
+
+/* Scrollbar dark */
+.dark .chat-messages {
+  scrollbar-color: #444 transparent;
+}
+.dark .chat-messages::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+/* Gray-100 bg dark */
+.dark .bg-gray-100 {
+  background-color: #2a2a2a;
+}
+
+/* Events backdrop dark is fine since it has overlay */
+
+/* Modal close button dark */
+.dark .bg-white\/80 {
+  background-color: rgba(36, 36, 36, 0.8);
+}
+.dark .bg-white\/50 {
+  background-color: rgba(36, 36, 36, 0.5);
 }

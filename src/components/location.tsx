@@ -1,7 +1,12 @@
+"use client";
+
 import { policies, WHATSAPP_NUMBER, EMAIL, GOOGLE_MAPS_EMBED_URL, MAPS_LINK } from "@/lib/config";
 import { DynamicIcon, MapPin, Phone, Mail, Heart, ExternalLink } from "@/components/icons";
+import { useLanguage } from "@/lib/i18n";
 
 export default function LocationAndPolicies() {
+  const { t } = useLanguage();
+
   return (
     <section id="ubicacion">
       {/* Map + Overlay */}
@@ -22,11 +27,11 @@ export default function LocationAndPolicies() {
                 <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
                   <MapPin className="w-5 h-5 text-gold" />
                 </div>
-                <h2 className="font-serif text-3xl md:text-4xl text-anthracite">Ubicación</h2>
+                <h2 className="font-serif text-3xl md:text-4xl text-anthracite">{t("location.title")}</h2>
               </div>
               <div className="w-10 h-0.5 bg-gold mb-6"></div>
               <p className="text-gray-600 font-light leading-relaxed mb-8">
-                Sector Guayllabamba, vía Pueblo Viejo - A 35 minutos de Quito
+                {t("location.description")}
               </p>
               <a
                 href={MAPS_LINK}
@@ -34,7 +39,7 @@ export default function LocationAndPolicies() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-7 py-3.5 border-2 border-gold text-gold text-sm uppercase tracking-wider hover:bg-gold hover:text-white transition-all duration-300"
               >
-                Ver en Google Maps <ExternalLink className="w-[15px] h-[15px]" />
+                {t("location.viewMaps")} <ExternalLink className="w-[15px] h-[15px]" />
               </a>
             </div>
           </div>
@@ -45,10 +50,10 @@ export default function LocationAndPolicies() {
       <div id="politicas" className="py-24 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl text-anthracite mb-4">Políticas y Condiciones de Estadía</h2>
+            <h2 className="font-serif text-4xl text-anthracite mb-4">{t("policies.title")}</h2>
             <div className="w-16 h-0.5 bg-gold mx-auto mb-8"></div>
             <p className="text-gray-500 font-light leading-relaxed max-w-2xl mx-auto">
-              Queremos que disfrutes tu tiempo con nosotros y que tu experiencia sea tranquila y agradable.
+              {t("policies.subtitle")}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -60,10 +65,10 @@ export default function LocationAndPolicies() {
                   </div>
                   <div className="flex items-baseline gap-2.5">
                     <span className="text-gold/30 font-serif text-xs tracking-wider">{policy.number}</span>
-                    <h3 className="font-serif text-lg text-anthracite leading-snug">{policy.title}</h3>
+                    <h3 className="font-serif text-lg text-anthracite leading-snug">{t(`policy.${policy.number}.title`)}</h3>
                   </div>
                 </div>
-                <p className="text-gray-500 font-light leading-relaxed text-[13.5px] pl-[52px]">{policy.text}</p>
+                <p className="text-gray-500 font-light leading-relaxed text-[13.5px] pl-[52px]">{t(`policy.${policy.number}.text`)}</p>
               </div>
             ))}
           </div>
@@ -75,7 +80,7 @@ export default function LocationAndPolicies() {
         <div className="max-w-xl mx-auto text-center">
           <Heart className="w-5 h-5 text-gold mx-auto mb-4 opacity-70" />
           <p className="text-gray-600 font-light leading-relaxed text-sm italic">
-            Nuestro mayor deseo es que te sientas cómodo, relajado y bien atendido. Gracias por ayudarnos a mantener un ambiente agradable para todos.
+            {t("policies.closingMessage")}
           </p>
         </div>
       </div>

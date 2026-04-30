@@ -3,10 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { events, WHATSAPP_NUMBER, EVENTS_IMAGE_URL } from "@/lib/config";
 import { DynamicIcon, ArrowRight } from "@/components/icons";
+import { useLanguage } from "@/lib/i18n";
+import Image from "next/image";
 
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [revealed, setRevealed] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -25,17 +28,25 @@ export default function EventsSection() {
   }, []);
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "Hola, me interesa cotizar un evento en La Casa Bola. ¿Podrían brindarme más información sobre disponibilidad y precios?"
+    t("events.whatsappMessage")
   )}`;
+
+  const eventKeyMap: Record<string, string> = {
+    "Bodas Boutique": "events.bodas",
+    "Sesiones de Fotos": "events.fotos",
+    "Retiros": "events.retiros",
+    "Eventos Corporativos": "events.corporativos",
+  };
 
   return (
     <section id="eventos" ref={sectionRef} className="relative overflow-hidden">
       <div className="relative min-h-[85vh] flex items-center">
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src={EVENTS_IMAGE_URL}
             alt="Eventos en La Casa Bola"
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-anthracite/80 via-anthracite/60 to-anthracite/40"></div>
@@ -44,12 +55,12 @@ export default function EventsSection() {
           <div className={`max-w-2xl transition-all duration-1000 ease-out ${revealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-0.5 bg-gold"></div>
-              <span className="text-gold text-sm uppercase tracking-[0.2em] font-medium">Eventos</span>
+              <span className="text-gold text-sm uppercase tracking-[0.2em] font-medium">{t("events.label")}</span>
             </div>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight">Eventos Especiales</h2>
-            <p className="font-serif text-xl md:text-2xl text-white/80 mb-8 italic">El escenario perfecto para tus momentos inolvidables</p>
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight">{t("events.title")}</h2>
+            <p className="font-serif text-xl md:text-2xl text-white/80 mb-8 italic">{t("events.subtitle")}</p>
             <p className="text-white/70 font-light leading-relaxed text-lg mb-12 max-w-xl">
-              En La Casa Bola contamos con el espacio ideal para realizar cualquier tipo de celebración, todo rodeado de naturaleza y con una arquitectura única.
+              {t("events.description")}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
               {events.map((evt, idx) => (
@@ -65,7 +76,7 @@ export default function EventsSection() {
                   <div className="text-gold mb-2 flex justify-center">
                     <DynamicIcon name={evt.icon} size={20} />
                   </div>
-                  <span className="text-white/90 text-sm font-light">{evt.title}</span>
+                  <span className="text-white/90 text-sm font-light">{t(eventKeyMap[evt.title] || evt.title)}</span>
                 </div>
               ))}
             </div>
@@ -80,7 +91,7 @@ export default function EventsSection() {
                 transform: revealed ? "translateY(0)" : "translateY(15px)",
               }}
             >
-              Cotizar mi evento <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+              {t("events.cta")} <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
             </a>
           </div>
         </div>

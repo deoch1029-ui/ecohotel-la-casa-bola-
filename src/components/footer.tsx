@@ -1,3 +1,5 @@
+"use client";
+
 import {
   BRAND_LOGO_URL,
   WHATSAPP_NUMBER,
@@ -8,8 +10,11 @@ import {
   TIKTOK_URL,
 } from "@/lib/config";
 import { Facebook, Instagram, MessageCircle, Phone, Mail } from "@/components/icons";
+import { useLanguage } from "@/lib/i18n";
+import Image from "next/image";
 
 export default function Footer() {
+  const { t } = useLanguage();
   const year = new Date().getFullYear();
 
   return (
@@ -19,7 +24,7 @@ export default function Footer() {
           {/* Brand + Social */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <img
+              <Image
                 src={BRAND_LOGO_URL}
                 alt="Logo Ecohotel La Casa Bola"
                 width={44}
@@ -29,7 +34,7 @@ export default function Footer() {
               <span className="font-serif text-xl md:text-2xl font-semibold tracking-tight text-anthracite">La Casa Bola</span>
             </div>
             <p className="text-gray-600 font-light leading-relaxed mb-6">
-              Una experiencia única de lujo minimalista en armonía con el entorno de Guayllabamba.
+              {t("footer.brandDesc")}
             </p>
             <div className="flex space-x-4">
               <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="text-anthracite hover:text-gold transition-colors" aria-label="Facebook">
@@ -48,7 +53,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-serif text-xl text-anthracite mb-6">Contacto</h4>
+            <h4 className="font-serif text-xl text-anthracite mb-6">{t("footer.contact")}</h4>
             <ul className="space-y-4">
               <li className="flex items-center space-x-3 text-gray-600 font-light">
                 <Phone className="w-4 h-4 text-gold flex-shrink-0" />
@@ -67,9 +72,9 @@ export default function Footer() {
 
           {/* WhatsApp CTA */}
           <div>
-            <h4 className="font-serif text-xl text-anthracite mb-6">¿Dudas?</h4>
+            <h4 className="font-serif text-xl text-anthracite mb-6">{t("footer.questions")}</h4>
             <p className="text-gray-600 font-light text-sm mb-4">
-              Escríbenos directamente por WhatsApp o chatea con Bola, nuestra asistente IA.
+              {t("footer.questionsDesc")}
             </p>
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -77,14 +82,14 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="flex items-center justify-center w-full py-3 border border-anthracite text-anthracite hover:bg-anthracite hover:text-white transition-all text-sm uppercase tracking-widest"
             >
-              Chat WhatsApp
+              {t("footer.chatWhatsapp")}
             </a>
           </div>
         </div>
 
         {/* Copyright */}
         <div className="text-center border-t border-gray-200 pt-8">
-          <p className="text-gray-400 text-xs">© {year} Ecohotel La Casa Bola. Todos los derechos reservados.</p>
+          <p className="text-gray-400 text-xs">© {year} Ecohotel La Casa Bola. {t("footer.rights")}</p>
         </div>
       </div>
     </footer>

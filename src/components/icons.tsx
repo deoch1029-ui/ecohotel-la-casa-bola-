@@ -39,6 +39,8 @@ import {
   Instagram,
   ArrowRight,
   ExternalLink,
+  Sun,
+  Moon,
 } from "lucide-react";
 import type { LucideProps } from "lucide-react";
 
@@ -81,6 +83,8 @@ const iconMap: Record<string, React.ComponentType<LucideProps>> = {
   Instagram,
   ArrowRight,
   ExternalLink,
+  Sun,
+  Moon,
 };
 
 export function DynamicIcon({
@@ -131,4 +135,6 @@ export {
   Instagram,
   ArrowRight,
   ExternalLink,
+  Sun,
+  Moon,
 };

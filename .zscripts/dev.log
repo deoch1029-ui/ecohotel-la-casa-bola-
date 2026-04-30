@@ -1,0 +1,20 @@
+==========================================
+[2026-04-30 20:40:45] Starting: bun install
+==========================================
+[BUN] Installing dependencies...
+bun install v1.3.12 (700fc117)
+Resolving dependencies
+Resolved, downloaded and extracted [8]
+Saved lockfile
+
+6 packages installed [164.00ms]
+==========================================
+[2026-04-30 20:40:45] Completed: bun install
+[LOG] Step: bun install | Duration: 0s
+==========================================
+
+==========================================
+[2026-04-30 20:40:45] Starting: bun run db:push
+==========================================
+[BUN] Setting up database...
+error: Script not found "db:push"

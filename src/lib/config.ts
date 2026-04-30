@@ -327,4 +327,64 @@ export const NAV_LINKS = [
   { label: "Eventos", href: "#eventos" },
   { label: "Ubicación", href: "#ubicacion" },
   { label: "Políticas", href: "#politicas" },
+  { label: "FAQ", href: "#faq" },
+];
+
+export interface FAQItem {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+export const faqItems: FAQItem[] = [
+  {
+    id: 1,
+    question: "¿Cuáles son los precios de las habitaciones?",
+    answer: "Tenemos 3 rangos de precios por pareja por noche: Habitaciones 1 y 2 a $45 USD (estándar), Habitaciones 3, 4 y 5 a $60 USD (confort), y Habitaciones 6, 7 y 8 a $80 USD (con hidromasaje privado y champán incluido). Decoración romántica disponible con costo adicional.",
+  },
+  {
+    id: 2,
+    question: "¿Cómo llego al hotel desde Quito?",
+    answer: "Estamos ubicados en el sector Guayllabamba, vía Pueblo Viejo, a aproximadamente 35 minutos de Quito. Puedes llegar en vehículo propio o taxi. Te recomendamos usar Google Maps buscando 'Ecohotel La Casa Bola' para obtener la ruta exacta.",
+  },
+  {
+    id: 3,
+    question: "¿Las habitaciones tienen hidromasaje/jacuzzi?",
+    answer: "Sí, nuestras Habitaciones 6, 7 y 8 cuentan con hidromasaje/jacuzzi privado climatizado disponible las 24 horas, además de una botella de champán de bienvenida incluida en el precio.",
+  },
+  {
+    id: 4,
+    question: "¿Puedo solicitar decoración romántica?",
+    answer: "¡Por supuesto! Todas nuestras habitaciones tienen disponible decoración romántica por un valor adicional. Solo indícalo al momento de tu reserva por WhatsApp y nosotros nos encargamos del resto.",
+  },
+  {
+    id: 5,
+    question: "¿Aceptan mascotas?",
+    answer: "Para consultas sobre el ingreso de mascotas, te recomendamos contactarnos directamente por WhatsApp al +593 98 790 8530 para confirmar las condiciones y disponibilidad.",
+  },
+  {
+    id: 6,
+    question: "¿Cómo puedo hacer una reserva?",
+    answer: "Puedes reservar directamente desde nuestro sitio web usando el calendario de reservas, o contactarnos por WhatsApp al +593 98 790 8530. Nuestro equipo confirmará la disponibilidad de las fechas solicitadas.",
+  },
+  {
+    id: 7,
+    question: "¿Cuál es la política de cancelación?",
+    answer: "Las políticas de cancelación se coordinan directamente con nuestro equipo al momento de la reserva. Te recomendamos contactarnos por WhatsApp para conocer los detalles según tu fecha y tipo de reserva.",
+  },
+  {
+    id: 8,
+    question: "¿Realizan eventos?",
+    answer: "¡Sí! Organizamos bodas boutique, sesiones de fotos, retiros y eventos corporativos. Contamos con espacios rodeados de naturaleza y una arquitectura única. Contáctanos por WhatsApp para cotizar tu evento.",
+  },
+  {
+    id: 9,
+    question: "¿Tienen estacionamiento?",
+    answer: "Sí, contamos con parqueadero gratuito para todos nuestros huéspedes dentro de las instalaciones del hotel.",
+  },
+  {
+    id: 10,
+    question: "¿Cuál es el horario de check-in y check-out?",
+    answer: "El horario de check-in y check-out se coordina directamente con nuestro equipo por WhatsApp para brindarte la mejor atención y flexibilidad según disponibilidad.",
+  },
 ];
