@@ -11,7 +11,7 @@ import {
 } from "@/lib/config";
 import { Facebook, Instagram, MessageCircle, Phone, Mail } from "@/components/icons";
 import { useLanguage } from "@/lib/i18n";
-import Image from "next/image";
+
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -24,7 +24,8 @@ export default function Footer() {
           {/* Brand + Social */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={BRAND_LOGO_URL}
                 alt="Logo Ecohotel La Casa Bola"
                 width={44}

@@ -5,12 +5,11 @@ import { NAV_LINKS, BRAND_LOGO_URL, WHATSAPP_NUMBER } from "@/lib/config";
 import { Menu, X, Sun, Moon } from "@/components/icons";
 import { useLanguage } from "@/lib/i18n";
 import { useTheme } from "@/components/theme-provider";
-import Image from "next/image";
-
 function BrandTitle({ scrolled }: { scrolled: boolean }) {
   return (
     <a href="#" className={`flex items-center gap-2.5 transition-colors duration-300 ${scrolled ? "text-anthracite" : "text-white drop-shadow-md"}`}>
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={BRAND_LOGO_URL}
         alt="Logo Ecohotel La Casa Bola"
         width={36}
