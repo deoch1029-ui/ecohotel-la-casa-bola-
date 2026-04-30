@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     siteName: "Ecohotel La Casa Bola",
     images: [
       {
-        url: "https://i.ibb.co/MkVbdSWT/Whats-App-Image-2026-04-12-at-12-10-00-PM-1-upscayl-4x-upscayl-standard-4x.png",
+        url: "/images/hero.png",
         width: 1200,
         height: 630,
         alt: "Ecohotel La Casa Bola - Vista exterior de las habitaciones esféricas",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     title: "Ecohotel La Casa Bola | Lujo Minimalista",
     description: "Tu refugio esférico en el valle de Guayllabamba. Habitaciones desde $45 USD.",
     images: [
-      "https://i.ibb.co/MkVbdSWT/Whats-App-Image-2026-04-12-at-12-10-00-PM-1-upscayl-4x-upscayl-standard-4x.png",
+      "/images/hero.png",
     ],
   },
   robots: {
@@ -90,7 +90,7 @@ const jsonLd = {
   description:
     "Refugio esférico de lujo minimalista en el valle de Guayllabamba, a 35 minutos de Quito. Habitaciones con hidromasaje, vistas panorámicas y conexión con la naturaleza.",
   url: "https://lacasabola.com",
-  image: "https://i.ibb.co/MkVbdSWT/Whats-App-Image-2026-04-12-at-12-10-00-PM-1-upscayl-4x-upscayl-standard-4x.png",
+  image: "https://lacasabola.com/images/hero.png",
   telephone: "+593987908530",
   email: "ecohotelcasabola@gmail.com",
   address: {
@@ -123,11 +123,11 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <head>
         <meta name="google-site-verification" content="TU_CODIGO_VERIFICACION" />
-        <link rel="preconnect" href="https://i.ibb.co" />
+
         <link
           rel="preload"
           as="image"
-          href="https://i.ibb.co/MkVbdSWT/Whats-App-Image-2026-04-12-at-12-10-00-PM-1-upscayl-4x-upscayl-standard-4x.png"
+          href="/images/hero.png"
         />
         <script
           type="application/ld+json"

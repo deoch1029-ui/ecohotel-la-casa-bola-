@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
     remotePatterns: [
-      { protocol: "https", hostname: "i.ibb.co" },
       { protocol: "https", hostname: "raw.githubusercontent.com" },
     ],
   },

@@ -1,8 +1,7 @@
 export const BRAND_LOGO_URL =
   "https://raw.githubusercontent.com/deoch1029-ui/ecohotel-la-casa-bola-/refs/heads/main/logo%20casa%20bola.svg";
 
-export const HERO_IMAGE_URL =
-  "https://i.ibb.co/MkVbdSWT/Whats-App-Image-2026-04-12-at-12-10-00-PM-1-upscayl-4x-upscayl-standard-4x.png";
+export const HERO_IMAGE_URL = "/images/hero.png";
 
 export const WHATSAPP_NUMBER = "593987908530";
 export const EMAIL = "ecohotelcasabola@gmail.com";
@@ -15,8 +14,7 @@ export const MAPS_LINK = "https://maps.app.goo.gl/PSNLLNd1xGcNhcNX7";
 export const GOOGLE_MAPS_EMBED_URL =
   "https://maps.google.com/maps?q=Ecohotel+La+Casa+Bola+Guayllabamba+Ecuador&z=15&t=&ie=UTF8&iwloc=A&output=embed";
 
-export const EVENTS_IMAGE_URL =
-  "https://i.ibb.co/jPTvCByQ/75e5af37-3842-42fc-9c94-f5878cf504c1.jpg";
+export const EVENTS_IMAGE_URL = "/images/events.jpg";
 
 export const PLACEHOLDER_SVG =
   "data:image/svg+xml," +
@@ -49,12 +47,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "https://i.ibb.co/4RmtWqKm/Captura-de-pantalla-2026-04-12-132932-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/jk2HWcKg/Captura-de-pantalla-2026-04-12-132923-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/4nxWHq31/Captura-de-pantalla-2026-04-12-132928-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/Mk8sp7Nc/Captura-de-pantalla-2026-04-12-132955-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/MkR8268F/Captura-de-pantalla-2026-04-12-133021-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/5D8D4fH/Captura-de-pantalla-2026-04-12-133025-upscayl-4x-upscayl-standard-4x.png",
+      "/images/rooms/r1-1.png",
+      "/images/rooms/r1-2.png",
+      "/images/rooms/r1-3.png",
+      "/images/rooms/r1-4.png",
+      "/images/rooms/r1-5.png",
+      "/images/rooms/r1-6.png",
     ],
     services: [
       { icon: "Wifi", label: "WiFi de Alta Velocidad" },
@@ -75,12 +73,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "https://i.ibb.co/mgfq46J/Captura-de-pantalla-2026-04-12-134144-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/Y6D9fJN/Captura-de-pantalla-2026-04-12-123508-upscayl-4x-ultrasharp-4x.png",
-      "https://i.ibb.co/QFy2f93r/Captura-de-pantalla-2026-04-12-123514-upscayl-4x-ultrasharp-4x.png",
-      "https://i.ibb.co/kgHVKvgS/Captura-de-pantalla-2026-04-12-123519-upscayl-4x-ultrasharp-4x.png",
-      "https://i.ibb.co/bgd7T4NP/Captura-de-pantalla-2026-04-12-123524-upscayl-4x-ultrasharp-4x.png",
-      "https://i.ibb.co/q34Z4Ytj/Captura-de-pantalla-2026-04-12-124033-upscayl-4x-ultrasharp-4x.png",
+      "/images/rooms/r2-1.png",
+      "/images/rooms/r2-2.png",
+      "/images/rooms/r2-3.png",
+      "/images/rooms/r2-4.png",
+      "/images/rooms/r2-5.png",
+      "/images/rooms/r2-6.png",
     ],
     services: [
       { icon: "Wifi", label: "WiFi Estándar" },
@@ -101,12 +99,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "https://i.ibb.co/9mdNpyxN/Captura-de-pantalla-2026-04-12-125228-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/d4cW2Sbp/Captura-de-pantalla-2026-04-12-125216-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/S48KtF0r/Captura-de-pantalla-2026-04-12-125220-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/KxD1ZQP4/Captura-de-pantalla-2026-04-12-125224-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/zHCJrgNL/Captura-de-pantalla-2026-04-12-125235-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/5WsXrbgV/Captura-de-pantalla-2026-04-12-134212-upscayl-4x-upscayl-standard-4x.png",
+      "/images/rooms/r3-1.png",
+      "/images/rooms/r3-2.png",
+      "/images/rooms/r3-3.png",
+      "/images/rooms/r3-4.png",
+      "/images/rooms/r3-5.png",
+      "/images/rooms/r3-6.png",
     ],
     services: [
       { icon: "Wifi", label: "WiFi de Alta Velocidad" },
@@ -127,12 +125,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "https://i.ibb.co/TVdkQs9/Captura-de-pantalla-2026-04-12-125331-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/0yRJZqWY/Captura-de-pantalla-2026-04-12-125341-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/Mxc594Gj/Captura-de-pantalla-2026-04-12-125351-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/QFS8r7Pv/Captura-de-pantalla-2026-04-12-125407-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/tM6qJTXX/Captura-de-pantalla-2026-04-12-134236-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/p6VzRJzL/Captura-de-pantalla-2026-04-12-125337-upscayl-4x-upscayl-standard-4x.png",
+      "/images/rooms/r4-1.png",
+      "/images/rooms/r4-2.png",
+      "/images/rooms/r4-3.png",
+      "/images/rooms/r4-4.png",
+      "/images/rooms/r4-5.png",
+      "/images/rooms/r4-6.png",
     ],
     services: [
       { icon: "Wifi", label: "WiFi de Alta Velocidad" },
@@ -153,12 +151,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "https://i.ibb.co/fz48KsqS/Captura-de-pantalla-2026-04-12-125416-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/wrBfbwQ5/Captura-de-pantalla-2026-04-12-125420-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/7J7tBpC7/Captura-de-pantalla-2026-04-12-125425-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/wnN1M35/Captura-de-pantalla-2026-04-12-125430-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/K36YWH1/Captura-de-pantalla-2026-04-12-125435-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/VpSMM53g/Captura-de-pantalla-2026-04-12-181831-upscayl-4x-upscayl-standard-4x.png",
+      "/images/rooms/r5-1.png",
+      "/images/rooms/r5-2.png",
+      "/images/rooms/r5-3.png",
+      "/images/rooms/r5-4.png",
+      "/images/rooms/r5-5.png",
+      "/images/rooms/r5-6.png",
     ],
     services: [
       { icon: "Wifi", label: "WiFi de Alta Velocidad" },
@@ -179,12 +177,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "https://i.ibb.co/4gVczwvx/Captura-de-pantalla-2026-04-12-134050-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/1YYtbZfc/Captura-de-pantalla-2026-04-12-134040-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/G3tqN5mW/Captura-de-pantalla-2026-04-12-134043-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/VF2QXGV/Captura-de-pantalla-2026-04-12-134047-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/9kPd4g2W/Captura-de-pantalla-2026-04-12-134054-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/yFYZB9Pk/Captura-de-pantalla-2026-04-12-134057-upscayl-4x-upscayl-standard-4x.png",
+      "/images/rooms/r6-1.png",
+      "/images/rooms/r6-2.png",
+      "/images/rooms/r6-3.png",
+      "/images/rooms/r6-4.png",
+      "/images/rooms/r6-5.png",
+      "/images/rooms/r6-6.png",
     ],
     services: [
       { icon: "Wifi", label: "WiFi Premium" },
@@ -206,12 +204,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "https://i.ibb.co/4nh76D48/Captura-de-pantalla-2026-04-12-134105-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/chvW9KY4/Captura-de-pantalla-2026-04-12-134109-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/C3DqR6Kx/Captura-de-pantalla-2026-04-12-134112-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/97b5YC4/Captura-de-pantalla-2026-04-12-134115-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/LXSg9p20/Captura-de-pantalla-2026-04-12-134119-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/FqHKx06R/Captura-de-pantalla-2026-04-12-134123-upscayl-4x-upscayl-standard-4x.png",
+      "/images/rooms/r7-1.png",
+      "/images/rooms/r7-2.png",
+      "/images/rooms/r7-3.png",
+      "/images/rooms/r7-4.png",
+      "/images/rooms/r7-5.png",
+      "/images/rooms/r7-6.png",
     ],
     services: [
       { icon: "Wifi", label: "WiFi Premium" },
@@ -233,12 +231,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "https://i.ibb.co/CfvXhZM/Captura-de-pantalla-2026-04-12-125256-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/VcS0dB5W/Captura-de-pantalla-2026-04-12-125308-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/FtDrvYk/Captura-de-pantalla-2026-04-12-125316-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/sptBZ884/Captura-de-pantalla-2026-04-12-125323-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/GYHd5TV/Captura-de-pantalla-2026-04-12-131654-upscayl-4x-upscayl-standard-4x.png",
-      "https://i.ibb.co/S7vWZxZK/Captura-de-pantalla-2026-04-12-184553-upscayl-4x-upscayl-standard-4x.png",
+      "/images/rooms/r8-1.png",
+      "/images/rooms/r8-2.png",
+      "/images/rooms/r8-3.png",
+      "/images/rooms/r8-4.png",
+      "/images/rooms/r8-5.png",
+      "/images/rooms/r8-6.png",
     ],
     services: [
       { icon: "Wifi", label: "WiFi Premium" },
