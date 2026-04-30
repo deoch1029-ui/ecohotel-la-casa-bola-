@@ -1,7 +1,7 @@
 export const BRAND_LOGO_URL =
   "https://raw.githubusercontent.com/deoch1029-ui/ecohotel-la-casa-bola-/refs/heads/main/logo%20casa%20bola.svg";
 
-export const HERO_IMAGE_URL = "/images/hero.png";
+export const HERO_IMAGE_URL = "/images/hero.jpg";
 
 export const WHATSAPP_NUMBER = "593987908530";
 export const EMAIL = "ecohotelcasabola@gmail.com";
@@ -47,12 +47,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "/images/rooms/r1-1.png",
-      "/images/rooms/r1-2.png",
-      "/images/rooms/r1-3.png",
-      "/images/rooms/r1-4.png",
-      "/images/rooms/r1-5.png",
-      "/images/rooms/r1-6.png",
+      "/images/rooms/r1-1.jpg",
+      "/images/rooms/r1-2.jpg",
+      "/images/rooms/r1-3.jpg",
+      "/images/rooms/r1-4.jpg",
+      "/images/rooms/r1-5.jpg",
+      "/images/rooms/r1-6.jpg",
     ],
     services: [
       { icon: "Wifi", label: "WiFi de Alta Velocidad" },
@@ -73,12 +73,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "/images/rooms/r2-1.png",
-      "/images/rooms/r2-2.png",
-      "/images/rooms/r2-3.png",
-      "/images/rooms/r2-4.png",
-      "/images/rooms/r2-5.png",
-      "/images/rooms/r2-6.png",
+      "/images/rooms/r2-1.jpg",
+      "/images/rooms/r2-2.jpg",
+      "/images/rooms/r2-3.jpg",
+      "/images/rooms/r2-4.jpg",
+      "/images/rooms/r2-5.jpg",
+      "/images/rooms/r2-6.jpg",
     ],
     services: [
       { icon: "Wifi", label: "WiFi Estándar" },
@@ -99,12 +99,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "/images/rooms/r3-1.png",
-      "/images/rooms/r3-2.png",
-      "/images/rooms/r3-3.png",
-      "/images/rooms/r3-4.png",
-      "/images/rooms/r3-5.png",
-      "/images/rooms/r3-6.png",
+      "/images/rooms/r3-1.jpg",
+      "/images/rooms/r3-2.jpg",
+      "/images/rooms/r3-3.jpg",
+      "/images/rooms/r3-4.jpg",
+      "/images/rooms/r3-5.jpg",
+      "/images/rooms/r3-6.jpg",
     ],
     services: [
       { icon: "Wifi", label: "WiFi de Alta Velocidad" },
@@ -125,12 +125,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "/images/rooms/r4-1.png",
-      "/images/rooms/r4-2.png",
-      "/images/rooms/r4-3.png",
-      "/images/rooms/r4-4.png",
-      "/images/rooms/r4-5.png",
-      "/images/rooms/r4-6.png",
+      "/images/rooms/r4-1.jpg",
+      "/images/rooms/r4-2.jpg",
+      "/images/rooms/r4-3.jpg",
+      "/images/rooms/r4-4.jpg",
+      "/images/rooms/r4-5.jpg",
+      "/images/rooms/r4-6.jpg",
     ],
     services: [
       { icon: "Wifi", label: "WiFi de Alta Velocidad" },
@@ -151,12 +151,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "/images/rooms/r5-1.png",
-      "/images/rooms/r5-2.png",
-      "/images/rooms/r5-3.png",
-      "/images/rooms/r5-4.png",
-      "/images/rooms/r5-5.png",
-      "/images/rooms/r5-6.png",
+      "/images/rooms/r5-1.jpg",
+      "/images/rooms/r5-2.jpg",
+      "/images/rooms/r5-3.jpg",
+      "/images/rooms/r5-4.jpg",
+      "/images/rooms/r5-5.jpg",
+      "/images/rooms/r5-6.jpg",
     ],
     services: [
       { icon: "Wifi", label: "WiFi de Alta Velocidad" },
@@ -177,12 +177,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "/images/rooms/r6-1.png",
-      "/images/rooms/r6-2.png",
-      "/images/rooms/r6-3.png",
-      "/images/rooms/r6-4.png",
-      "/images/rooms/r6-5.png",
-      "/images/rooms/r6-6.png",
+      "/images/rooms/r6-1.jpg",
+      "/images/rooms/r6-2.jpg",
+      "/images/rooms/r6-3.jpg",
+      "/images/rooms/r6-4.jpg",
+      "/images/rooms/r6-5.jpg",
+      "/images/rooms/r6-6.jpg",
     ],
     services: [
       { icon: "Wifi", label: "WiFi Premium" },
@@ -204,12 +204,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "/images/rooms/r7-1.png",
-      "/images/rooms/r7-2.png",
-      "/images/rooms/r7-3.png",
-      "/images/rooms/r7-4.png",
-      "/images/rooms/r7-5.png",
-      "/images/rooms/r7-6.png",
+      "/images/rooms/r7-1.jpg",
+      "/images/rooms/r7-2.jpg",
+      "/images/rooms/r7-3.jpg",
+      "/images/rooms/r7-4.jpg",
+      "/images/rooms/r7-5.jpg",
+      "/images/rooms/r7-6.jpg",
     ],
     services: [
       { icon: "Wifi", label: "WiFi Premium" },
@@ -231,12 +231,12 @@ export const rooms: Room[] = [
     hasExtraNote: true,
     extraNote: "Decoración romántica disponible por un valor adicional. Consultar al momento de la reserva.",
     images: [
-      "/images/rooms/r8-1.png",
-      "/images/rooms/r8-2.png",
-      "/images/rooms/r8-3.png",
-      "/images/rooms/r8-4.png",
-      "/images/rooms/r8-5.png",
-      "/images/rooms/r8-6.png",
+      "/images/rooms/r8-1.jpg",
+      "/images/rooms/r8-2.jpg",
+      "/images/rooms/r8-3.jpg",
+      "/images/rooms/r8-4.jpg",
+      "/images/rooms/r8-5.jpg",
+      "/images/rooms/r8-6.jpg",
     ],
     services: [
       { icon: "Wifi", label: "WiFi Premium" },

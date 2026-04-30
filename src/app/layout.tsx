@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     siteName: "Ecohotel La Casa Bola",
     images: [
       {
-        url: "/images/hero.png",
+        url: "/images/hero.jpg",
         width: 1200,
         height: 630,
         alt: "Ecohotel La Casa Bola - Vista exterior de las habitaciones esféricas",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     title: "Ecohotel La Casa Bola | Lujo Minimalista",
     description: "Tu refugio esférico en el valle de Guayllabamba. Habitaciones desde $45 USD.",
     images: [
-      "/images/hero.png",
+      "/images/hero.jpg",
     ],
   },
   robots: {
@@ -90,7 +90,7 @@ const jsonLd = {
   description:
     "Refugio esférico de lujo minimalista en el valle de Guayllabamba, a 35 minutos de Quito. Habitaciones con hidromasaje, vistas panorámicas y conexión con la naturaleza.",
   url: "https://lacasabola.com",
-  image: "https://lacasabola.com/images/hero.png",
+  image: "https://lacasabola.com/images/hero.jpg",
   telephone: "+593987908530",
   email: "ecohotelcasabola@gmail.com",
   address: {
@@ -127,7 +127,7 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/hero.png"
+          href="/images/hero.jpg"
         />
         <script
           type="application/ld+json"
