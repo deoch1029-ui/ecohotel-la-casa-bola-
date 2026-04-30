@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // Para deploy en Firebase Hosting, descomenta la siguiente línea:
+  // output: "export",
   images: {
     unoptimized: true,
     remotePatterns: [

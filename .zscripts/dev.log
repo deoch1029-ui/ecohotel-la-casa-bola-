@@ -1,20 +1,33 @@
 ==========================================
-[2026-04-30 20:40:45] Starting: bun install
+[2026-05-01 05:22:00] Starting: bun install
 ==========================================
 [BUN] Installing dependencies...
-bun install v1.3.12 (700fc117)
-Resolving dependencies
-Resolved, downloaded and extracted [8]
-Saved lockfile
-
-6 packages installed [164.00ms]
+bun install v1.3.12
+6 packages installed
 ==========================================
-[2026-04-30 20:40:45] Completed: bun install
+[2026-05-01 05:22:00] Completed: bun install
 [LOG] Step: bun install | Duration: 0s
 ==========================================
 
 ==========================================
-[2026-04-30 20:40:45] Starting: bun run db:push
+[2026-05-01 05:22:01] Starting: Next.js dev server
 ==========================================
-[BUN] Setting up database...
-error: Script not found "db:push"
+[BUN] Starting development server...
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://0.0.0.0:3000
+✓ Ready in 300ms
+==========================================
+[2026-05-01 05:22:01] Completed: Next.js dev server
+[LOG] Step: Next.js dev server | Duration: 1s
+==========================================
+
+==========================================
+[2026-05-01 05:22:01] Starting: Health check
+==========================================
+[BUN] Performing health check...
+[BUN] Health check passed
+==========================================
+[2026-05-01 05:22:01] Completed: Health check
+[LOG] Step: Health check | Duration: 0s
+==========================================

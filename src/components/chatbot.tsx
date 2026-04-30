@@ -12,6 +12,9 @@ interface ChatMessage {
 
 const STORAGE_KEY = "bola-chat-history";
 
+// Stable empty array reference to avoid infinite re-renders in useSyncExternalStore
+const EMPTY_MESSAGES: ChatMessage[] = [];
+
 // In-memory cache for fast access within the same render
 let chatCache: ChatMessage[] | null = null;
 const chatListeners = new Set<() => void>();
@@ -32,7 +35,7 @@ function getMessagesFromStorage(): ChatMessage[] {
       }
     }
   } catch { /* ignore */ }
-  return [];
+  return EMPTY_MESSAGES;
 }
 
 function saveMessagesToStorage(msgs: ChatMessage[]) {
@@ -53,7 +56,7 @@ function getChatSnapshot(): ChatMessage[] {
 }
 
 function getChatServerSnapshot(): ChatMessage[] {
-  return [];
+  return EMPTY_MESSAGES;
 }
 
 export default function BolaChat() {
