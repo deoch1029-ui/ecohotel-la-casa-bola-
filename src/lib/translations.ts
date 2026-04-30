@@ -198,6 +198,8 @@ export const translations: Record<string, Record<string, string>> = {
     // Chatbot
     "chat.bolaName": "Bola ✨",
     "chat.bolaRole": "Asistente de La Casa Bola",
+    "chat.newChat": "Nueva conversación",
+    "chat.private": "Tu chat es privado y solo se guarda en tu navegador",
     "chat.placeholder": "Escribe tu pregunta...",
     "chat.greeting": "¡Hola! Soy Bola 🌿, tu asistente del Ecohotel La Casa Bola. ¿En qué puedo ayudarte hoy? Puedo contarte sobre nuestras habitaciones, precios, ubicación o cualquier duda que tengas. 😊",
     "chat.open": "Abrir asistente Bola",
@@ -433,6 +435,8 @@ export const translations: Record<string, Record<string, string>> = {
     // Chatbot
     "chat.bolaName": "Bola ✨",
     "chat.bolaRole": "La Casa Bola Assistant",
+    "chat.newChat": "New conversation",
+    "chat.private": "Your chat is private and only saved in your browser",
     "chat.placeholder": "Type your question...",
     "chat.greeting": "Hi! I'm Bola 🌿, your Ecohotel La Casa Bola assistant. How can I help you today? I can tell you about our rooms, prices, location, or any questions you may have. 😊",
     "chat.open": "Open Bola assistant",

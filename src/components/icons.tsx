@@ -41,6 +41,7 @@ import {
   ExternalLink,
   Sun,
   Moon,
+  RotateCcw,
 } from "lucide-react";
 import type { LucideProps } from "lucide-react";
 
@@ -85,6 +86,7 @@ const iconMap: Record<string, React.ComponentType<LucideProps>> = {
   ExternalLink,
   Sun,
   Moon,
+  RotateCcw,
 };
 
 export function DynamicIcon({
@@ -137,4 +139,5 @@ export {
   ExternalLink,
   Sun,
   Moon,
+  RotateCcw,
 };

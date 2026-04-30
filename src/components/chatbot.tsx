@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useSyncExternalStore } from "react";
-import { Sparkles, X, Send } from "@/components/icons";
+import { Sparkles, X, Send, RotateCcw } from "@/components/icons";
 import { WHATSAPP_NUMBER } from "@/lib/config";
 import { useLanguage } from "@/lib/i18n";
 
@@ -80,6 +80,14 @@ export default function BolaChat() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const clearChat = useCallback(() => {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch { /* ignore */ }
+    chatCache = null;
+    notifyChatListeners();
+  }, []);
 
   // Scroll to bottom
   useEffect(() => {
@@ -177,6 +185,9 @@ export default function BolaChat() {
               <p className="font-serif text-sm font-semibold leading-none">{t("chat.bolaName")}</p>
               <p className="text-xs text-white/60 mt-0.5">{t("chat.bolaRole")}</p>
             </div>
+            <button onClick={clearChat} className="text-white/60 hover:text-white transition-colors flex-shrink-0" title={t("chat.newChat")} aria-label={t("chat.newChat")}>
+              <RotateCcw className="w-4 h-4" />
+            </button>
             <button onClick={() => setIsOpen(false)} className="text-white/60 hover:text-white transition-colors flex-shrink-0" aria-label={t("chat.close")}>
               <X className="w-5 h-5" />
             </button>
@@ -223,6 +234,11 @@ export default function BolaChat() {
               ))}
             </div>
           )}
+
+          {/* Privacy notice */}
+          <div className="px-4 py-1 bg-white">
+            <p className="text-[10px] text-gray-400 text-center">{t("chat.private")}</p>
+          </div>
 
           {/* Input */}
           <div className="p-3 bg-white border-t border-gray-100 flex gap-2">
