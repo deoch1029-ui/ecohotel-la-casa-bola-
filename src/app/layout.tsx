@@ -42,8 +42,8 @@ export const metadata: Metadata = {
     languages: { "es-EC": "https://lacasabola.com" },
   },
   icons: {
-    icon: "https://raw.githubusercontent.com/deoch1029-ui/ecohotel-la-casa-bola-/refs/heads/main/logocasabola-ezgif.com-gif-maker.svg",
-    apple: "https://raw.githubusercontent.com/deoch1029-ui/ecohotel-la-casa-bola-/refs/heads/main/logocasabola-ezgif.com-gif-maker.svg",
+    icon: "https://raw.githubusercontent.com/deoch1029-ui/ecohotel-la-casa-bola-/refs/heads/main/logo%20casa%20bola.svg",
+    apple: "https://raw.githubusercontent.com/deoch1029-ui/ecohotel-la-casa-bola-/refs/heads/main/logo%20casa%20bola.svg",
   },
   openGraph: {
     title: "Ecohotel La Casa Bola | Lujo Minimalista en la Naturaleza",

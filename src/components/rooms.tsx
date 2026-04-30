@@ -5,6 +5,50 @@ import { rooms, type Room, WHATSAPP_NUMBER, PLACEHOLDER_SVG } from "@/lib/config
 import { DynamicIcon, X, ChevronLeft, ChevronRight, MessageCircle, CalendarDays, Camera, Heart } from "@/components/icons";
 import { useLanguage } from "@/lib/i18n";
 
+/* ─── SmartImage: native img with loading skeleton ─── */
+function SmartImage({
+  src,
+  alt,
+  className = "",
+  loading = "lazy",
+  fill = false,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  loading?: "lazy" | "eager";
+  fill?: boolean;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const [errored, setErrored] = useState(false);
+
+  return (
+    <div className={`relative ${fill ? "absolute inset-0" : "w-full h-full"}`}>
+      {/* Skeleton overlay while loading */}
+      {!loaded && !errored && (
+        <div
+          className="absolute inset-0 bg-gray-200 animate-pulse z-[1]"
+          aria-hidden="true"
+        />
+      )}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={errored ? PLACEHOLDER_SVG : src}
+        alt={alt}
+        className={`${className} transition-opacity duration-500 ${loaded || errored ? "opacity-100" : "opacity-0"}`}
+        loading={loading}
+        onLoad={() => setLoaded(true)}
+        onError={() => {
+          if (!errored) {
+            setErrored(true);
+            setLoaded(true);
+          }
+        }}
+      />
+    </div>
+  );
+}
+
 /* ─── RoomCard ─── */
 function RoomCard({
   room,
@@ -30,21 +74,16 @@ function RoomCard({
       className="group bg-white border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col h-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
     >
       <div className="relative overflow-hidden h-64">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <SmartImage
           src={room.images[0]}
           alt={`${t(`room.${room.id}.name`)} - Ecohotel La Casa Bola`}
-          width={400}
-          height={256}
           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-          loading="lazy"
-          onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_SVG; }}
         />
-        <div className="absolute top-4 right-4 bg-[#F9F7F2]/90 backdrop-blur-sm px-3 py-1">
+        <div className="absolute top-4 right-4 bg-[#F9F7F2]/90 backdrop-blur-sm px-3 py-1 z-10">
           <span className="text-gold font-serif font-semibold">${room.price}</span>
         </div>
         {room.images.length > 1 && (
-          <div className="absolute bottom-3 right-3 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center space-x-1">
+          <div className="absolute bottom-3 right-3 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm flex items-center space-x-1 z-10">
             <Camera className="w-3 h-3" /><span>{room.images.length}</span>
           </div>
         )}
@@ -145,23 +184,21 @@ function RoomModal({
         {/* Image gallery */}
         <div className="w-full md:w-3/5 bg-gray-100 flex flex-col relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           <div className="flex-grow relative overflow-hidden aspect-[4/3] md:aspect-auto md:h-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <SmartImage
               src={room.images[currentImg]}
               alt={`${t(`room.${room.id}.name`)} vista ${currentImg + 1}`}
               className="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
-              onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_SVG; }}
+              fill
             />
             {room.images.length > 1 && (
               <>
-                <button onClick={(e) => { e.stopPropagation(); setCurrentImg((i) => (i > 0 ? i - 1 : room.images.length - 1)); }} className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white text-anthracite rounded-full transition-colors backdrop-blur-sm" aria-label="Imagen anterior">
+                <button onClick={(e) => { e.stopPropagation(); setCurrentImg((i) => (i > 0 ? i - 1 : room.images.length - 1)); }} className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white text-anthracite rounded-full transition-colors backdrop-blur-sm z-10" aria-label="Imagen anterior">
                   <ChevronLeft className="w-6 h-6" />
                 </button>
-                <button onClick={(e) => { e.stopPropagation(); setCurrentImg((i) => (i < room.images.length - 1 ? i + 1 : 0)); }} className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white text-anthracite rounded-full transition-colors backdrop-blur-sm" aria-label="Imagen siguiente">
+                <button onClick={(e) => { e.stopPropagation(); setCurrentImg((i) => (i < room.images.length - 1 ? i + 1 : 0)); }} className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white text-anthracite rounded-full transition-colors backdrop-blur-sm z-10" aria-label="Imagen siguiente">
                   <ChevronRight className="w-6 h-6" />
                 </button>
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/40 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/40 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm z-10">
                   {currentImg + 1} / {room.images.length}
                 </div>
               </>
@@ -171,8 +208,11 @@ function RoomModal({
             <div className="h-20 bg-white border-t border-gray-100 flex items-center justify-center space-x-2 overflow-x-auto p-2 hide-scroll">
               {room.images.map((img, idx) => (
                 <button key={idx} onClick={() => setCurrentImg(idx)} className={`flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all ${currentImg === idx ? "border-gold opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`} aria-label={`Ver imagen ${idx + 1}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img} alt={`Miniatura ${idx}`} width={64} height={64} className="w-full h-full object-cover" loading="lazy" />
+                  <SmartImage
+                    src={img}
+                    alt={`Miniatura ${idx}`}
+                    className="w-full h-full object-cover"
+                  />
                 </button>
               ))}
             </div>
