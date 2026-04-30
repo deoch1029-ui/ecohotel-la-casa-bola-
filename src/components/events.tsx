@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { events, WHATSAPP_NUMBER, EVENTS_IMAGE_URL } from "@/lib/config";
 import { DynamicIcon, ArrowRight } from "@/components/icons";
 import { useLanguage } from "@/lib/i18n";
-import Image from "next/image";
-
 export default function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [revealed, setRevealed] = useState(false);
@@ -42,11 +40,11 @@ export default function EventsSection() {
     <section id="eventos" ref={sectionRef} className="relative overflow-hidden">
       <div className="relative min-h-[85vh] flex items-center">
         <div className="absolute inset-0 z-0">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={EVENTS_IMAGE_URL}
             alt="Eventos en La Casa Bola"
-            fill
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-anthracite/80 via-anthracite/60 to-anthracite/40"></div>

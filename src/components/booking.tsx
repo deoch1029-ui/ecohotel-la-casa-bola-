@@ -4,8 +4,6 @@ import { useState, useMemo } from "react";
 import { rooms, type Room, WHATSAPP_NUMBER } from "@/lib/config";
 import { ChevronLeft, ChevronRight, MessageCircle, CalendarDays } from "@/components/icons";
 import { useLanguage } from "@/lib/i18n";
-import Image from "next/image";
-
 export default function BookingSection() {
   const { t, language } = useLanguage();
   const sortedRooms = useMemo(() => [...rooms].sort((a, b) => a.price - b.price), []);
@@ -201,7 +199,8 @@ export default function BookingSection() {
                     )}
                   </div>
                   <div className="relative overflow-hidden h-32 mb-6">
-                    <Image src={room.images[0]} alt={t(`room.${room.id}.name`)} fill className="object-cover" />
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={room.images[0]} alt={t(`room.${room.id}.name`)} className="absolute inset-0 w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                   </div>
                   <button

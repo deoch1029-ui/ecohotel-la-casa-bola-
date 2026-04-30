@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { HERO_IMAGE_URL, WHATSAPP_NUMBER } from "@/lib/config";
 import { ChevronDown } from "@/components/icons";
 import { useLanguage } from "@/lib/i18n";
-import Image from "next/image";
-
 export default function Hero() {
   const [visible, setVisible] = useState(false);
   const { t } = useLanguage();
@@ -18,12 +16,11 @@ export default function Hero() {
   return (
     <header id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={HERO_IMAGE_URL}
           alt="Ecohotel La Casa Bola - Vista exterior de las habitaciones esféricas en el valle de Guayllabamba"
-          fill
-          className="object-cover"
-          priority
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/40"></div>
       </div>

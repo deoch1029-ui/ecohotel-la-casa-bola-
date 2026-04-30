@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { rooms, type Room, WHATSAPP_NUMBER, PLACEHOLDER_SVG } from "@/lib/config";
 import { DynamicIcon, X, ChevronLeft, ChevronRight, MessageCircle, CalendarDays, Camera, Heart } from "@/components/icons";
 import { useLanguage } from "@/lib/i18n";
-import Image from "next/image";
 
 /* ─── RoomCard ─── */
 function RoomCard({
@@ -31,7 +30,8 @@ function RoomCard({
       className="group bg-white border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col h-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
     >
       <div className="relative overflow-hidden h-64">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={room.images[0]}
           alt={`${t(`room.${room.id}.name`)} - Ecohotel La Casa Bola`}
           width={400}
@@ -145,11 +145,12 @@ function RoomModal({
         {/* Image gallery */}
         <div className="w-full md:w-3/5 bg-gray-100 flex flex-col relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           <div className="flex-grow relative overflow-hidden aspect-[4/3] md:aspect-auto md:h-full">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={room.images[currentImg]}
               alt={`${t(`room.${room.id}.name`)} vista ${currentImg + 1}`}
-              fill
-              className="object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
               onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_SVG; }}
             />
             {room.images.length > 1 && (
@@ -170,7 +171,8 @@ function RoomModal({
             <div className="h-20 bg-white border-t border-gray-100 flex items-center justify-center space-x-2 overflow-x-auto p-2 hide-scroll">
               {room.images.map((img, idx) => (
                 <button key={idx} onClick={() => setCurrentImg(idx)} className={`flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all ${currentImg === idx ? "border-gold opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`} aria-label={`Ver imagen ${idx + 1}`}>
-                  <Image src={img} alt={`Miniatura ${idx}`} width={64} height={64} className="w-full h-full object-cover" loading="lazy" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img} alt={`Miniatura ${idx}`} width={64} height={64} className="w-full h-full object-cover" loading="lazy" />
                 </button>
               ))}
             </div>
