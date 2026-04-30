@@ -323,7 +323,7 @@ export const events: EventType[] = [
 
 export const NAV_LINKS = [
   { label: "Habitaciones", href: "#habitaciones" },
-  { label: "Reservar", href: "#reservar" },
+  { label: "Reservar", href: "#reservas" },
   { label: "Eventos", href: "#eventos" },
   { label: "Ubicación", href: "#ubicacion" },
   { label: "Políticas", href: "#politicas" },
