@@ -5,50 +5,6 @@ import { rooms, type Room, WHATSAPP_NUMBER, PLACEHOLDER_SVG } from "@/lib/config
 import { DynamicIcon, X, ChevronLeft, ChevronRight, MessageCircle, CalendarDays, Camera, Heart } from "@/components/icons";
 import { useLanguage } from "@/lib/i18n";
 
-/* ─── SmartImage: native img with loading skeleton ─── */
-function SmartImage({
-  src,
-  alt,
-  className = "",
-  loading = "lazy",
-  fill = false,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  loading?: "lazy" | "eager";
-  fill?: boolean;
-}) {
-  const [loaded, setLoaded] = useState(false);
-  const [errored, setErrored] = useState(false);
-
-  return (
-    <div className={`relative ${fill ? "absolute inset-0" : "w-full h-full"}`}>
-      {/* Skeleton overlay while loading */}
-      {!loaded && !errored && (
-        <div
-          className="absolute inset-0 bg-gray-200 animate-pulse z-[1]"
-          aria-hidden="true"
-        />
-      )}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={errored ? PLACEHOLDER_SVG : src}
-        alt={alt}
-        className={`${className} transition-opacity duration-500 ${loaded || errored ? "opacity-100" : "opacity-0"}`}
-        loading={loading}
-        onLoad={() => setLoaded(true)}
-        onError={() => {
-          if (!errored) {
-            setErrored(true);
-            setLoaded(true);
-          }
-        }}
-      />
-    </div>
-  );
-}
-
 /* ─── RoomCard ─── */
 function RoomCard({
   room,
@@ -73,11 +29,14 @@ function RoomCard({
       aria-label={`${t("rooms.viewDetails")} ${t(`room.${room.id}.name`)}`}
       className="group bg-white border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col h-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
     >
-      <div className="relative overflow-hidden h-64">
-        <SmartImage
+      <div className="relative overflow-hidden h-64 bg-gray-100">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={room.images[0]}
           alt={`${t(`room.${room.id}.name`)} - Ecohotel La Casa Bola`}
           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+          loading="lazy"
+          onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_SVG; }}
         />
         <div className="absolute top-4 right-4 bg-[#F9F7F2]/90 backdrop-blur-sm px-3 py-1 z-10">
           <span className="text-gold font-serif font-semibold">${room.price}</span>
@@ -183,12 +142,14 @@ function RoomModal({
 
         {/* Image gallery */}
         <div className="w-full md:w-3/5 bg-gray-100 flex flex-col relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-          <div className="flex-grow relative overflow-hidden aspect-[4/3] md:aspect-auto md:h-full">
-            <SmartImage
+          <div className="flex-grow relative overflow-hidden aspect-[4/3] md:aspect-auto md:h-full bg-gray-100">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={room.images[currentImg]}
               alt={`${t(`room.${room.id}.name`)} vista ${currentImg + 1}`}
               className="absolute inset-0 w-full h-full object-cover"
-              fill
+              loading="lazy"
+              onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_SVG; }}
             />
             {room.images.length > 1 && (
               <>
@@ -208,11 +169,8 @@ function RoomModal({
             <div className="h-20 bg-white border-t border-gray-100 flex items-center justify-center space-x-2 overflow-x-auto p-2 hide-scroll">
               {room.images.map((img, idx) => (
                 <button key={idx} onClick={() => setCurrentImg(idx)} className={`flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all ${currentImg === idx ? "border-gold opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`} aria-label={`Ver imagen ${idx + 1}`}>
-                  <SmartImage
-                    src={img}
-                    alt={`Miniatura ${idx}`}
-                    className="w-full h-full object-cover"
-                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img} alt={`Miniatura ${idx}`} className="w-full h-full object-cover" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_SVG; }} />
                 </button>
               ))}
             </div>
