@@ -65,10 +65,10 @@ export default function LocationAndPolicies() {
                   </div>
                   <div className="flex items-baseline gap-2.5">
                     <span className="text-gold/30 font-serif text-xs tracking-wider">{policy.number}</span>
-                    <h3 className="font-serif text-lg text-anthracite leading-snug">{t(`policy.${policy.number}.title`)}</h3>
+                    <h3 className="font-serif text-lg text-anthracite leading-snug">{policy.title}</h3>
                   </div>
                 </div>
-                <p className="text-gray-500 font-light leading-relaxed text-[13.5px] pl-[52px]">{t(`policy.${policy.number}.text`)}</p>
+                <p className="text-gray-500 font-light leading-relaxed text-[13.5px] pl-[52px]">{policy.text}</p>
               </div>
             ))}
           </div>
