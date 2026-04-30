@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: #F9F7F2;
+  --color-anthracite: #2C2C2C;
+  --color-gold: #B89B62;
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+  --color-foreground: #2C2C2C;
+  --color-primary: #B89B62;
+  --color-primary-foreground: #ffffff;
+  --color-card: #ffffff;
+  --color-card-foreground: #2C2C2C;
+  --color-muted: #F9F7F2;
+  --color-muted-foreground: #6b7280;
+  --color-border: #f0ede6;
+  --color-input: #e5e7eb;
+  --color-ring: #B89B62;
+  --color-destructive: #ef4444;
+  --color-accent: #F9F7F2;
+  --color-accent-foreground: #2C2C2C;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #2C2C2C;
+  --color-secondary: #F9F7F2;
+  --color-secondary-foreground: #2C2C2C;
+  --radius: 0.625rem;
+}
+
+html { scroll-behavior: smooth; }
+body { background-color: #F9F7F2; color: #2C2C2C; -webkit-font-smoothing: antialiased; }
+.hide-scroll::-webkit-scrollbar { display: none; }
+.hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Policy cards */
+.policy-card { transition: all 0.35s ease; box-shadow: none; }
+.policy-card:hover { box-shadow: 3px 5px 20px rgba(184, 155, 98, 0.1); }
+
+/* Brand logo */
+.brand-logo-ring {
+  box-shadow: 0 0 0 1px rgba(184, 155, 98, 0.15), 0 2px 8px rgba(0,0,0,0.06);
+  transition: box-shadow 0.3s ease;
+}
+.brand-logo-ring:hover {
+  box-shadow: 0 0 0 1px rgba(184, 155, 98, 0.35), 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Calendar */
+.cal-day { transition: all 0.15s ease; }
+.cal-day:hover:not(.cal-disabled):not(.cal-empty) { background: #B89B62; color: white; }
+.cal-day.cal-selected { background: #B89B62; color: white; }
+.cal-day.cal-in-range { background: rgba(184,155,98,0.15); }
+.cal-day.cal-disabled { color: #ccc; cursor: not-allowed; }
+
+/* Chat */
+.chat-messages { scrollbar-width: thin; scrollbar-color: #e5e7eb transparent; }
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 2px; }
+
+.typing-dot { animation: typingBounce 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.chat-bubble-user { background: #B89B62; color: white; border-radius: 18px 18px 4px 18px; }
+.chat-bubble-bola { background: white; color: #2C2C2C; border-radius: 18px 18px 18px 4px; border: 1px solid #f0ede6; }
+
+@keyframes chatSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.chat-msg-anim { animation: chatSlideIn 0.25s ease-out forwards; }
+
+/* Hero animations */
+@keyframes fadeInUp {
+  0% { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Base layer */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
