@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Casa esférica estilizada -->
+  <circle cx="100" cy="95" r="70" fill="#C9A84C" opacity="0.15"/>
+  <circle cx="100" cy="95" r="55" fill="#C9A84C" opacity="0.25"/>
+  <path d="M100 30 C55 30 30 70 30 100 C30 145 60 165 100 165 C140 165 170 145 170 100 C170 70 145 30 100 30Z" fill="none" stroke="#C9A84C" stroke-width="3"/>
+  <!-- Puerta -->
+  <rect x="88" y="120" width="24" height="40" rx="12" fill="#C9A84C" opacity="0.6"/>
+  <!-- Ventana -->
+  <circle cx="72" cy="95" r="10" fill="none" stroke="#C9A84C" stroke-width="2"/>
+  <circle cx="128" cy="95" r="10" fill="none" stroke="#C9A84C" stroke-width="2"/>
+  <!-- Texto -->
+  <text x="100" y="190" text-anchor="middle" font-family="serif" font-size="14" fill="#C9A84C" font-weight="bold">La Casa Bola</text>
+</svg>
